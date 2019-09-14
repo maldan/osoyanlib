@@ -13,10 +13,11 @@
 #include <stdarg.h>
 
 #include "memory/memory.h"
-#include "string.h"
-#include "base64.h"
-#include "chars.h"
-#include "file.h"
+#include "string/string.h"
+#include "string/base64.h"
+#include "string/chars.h"
+#include "io/file.h"
+#include "io/logger.h"
 
 #define RESIZE_ARRAY_IF_NEED(A, S, EL_SIZE) if (A->length + S > A->allocated) {\
 size_t _minToAdd34cdf33435_Sdfsd4x = (A->length + S) - A->allocated; \
@@ -33,7 +34,8 @@ A->allocated = 4
 char*: chars_print, \
 struct String*: print_string, \
 struct StringArray*: print_string_array, \
-default: default_print)(#O, O)
+struct FileInfo*: print_file_info, \
+default: default_print)(__FILE__, __LINE__, O)
 
-void default_print(char *, void *);
+void default_print(const char *, size_t line, void *);
 

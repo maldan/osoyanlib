@@ -1,4 +1,5 @@
 #include "chars.h"
+#include "../io/logger.h"
 
 int chars_to_int(const char *str) {
     return (int)chars_to_long(str);
@@ -27,6 +28,6 @@ long chars_to_long(const char *str) {
     return atol(num);
 }
 
-void chars_print(char *s, void *v) {
-    printf("%s", (char *)v);
+void chars_print(const char *fileName, size_t line, void *data) {
+    LOGGER_LOG(fileName, line, "%s", data);
 }

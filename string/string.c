@@ -1,49 +1,56 @@
 #include "string.h"
 
 void ____string_init(struct String *string) {
-    //MEMORY_IN;
     INIT_DEFAULT_LIST_SIZE(string, char);
-    //MEMORY_OUT;
 }
 
-void ____string_free(char *fileName, char *function, size_t line, struct String *string) {
-    // MEMORY_FREE_AT(fileName, function, line, string->list);
+void ____string_free(struct String *string) {
     MEMORY_FREE(string->list);
+    MEMORY_FREE(string);
 }
 
 void ____string_array_init(struct StringArray *array) {
-    //MEMORY_IN;
     INIT_DEFAULT_LIST_SIZE(array, struct String *);
-    //MEMORY_OUT;
 }
 
-void ____string_array_free(char *fileName, char *function, size_t line, struct StringArray *array) {
+void ____string_array_free(struct StringArray *array) {
     // Free all strings
     for (size_t i = 0; i < array->length; ++i) {
-        ____string_free(fileName, function, line, array->list[i]);
-        MEMORY_FREE(array->list[i]);
-        //MEMORY_FREE_AT(fileName, function, line, array->list[i]);
+        ____string_free(array->list[i]);
+        // MEMORY_FREE(array->list[i]);
     }
     MEMORY_FREE(array->list);
-    //MEMORY_FREE_AT(fileName, function, line, array->list);
+    MEMORY_FREE(array);
 }
 
-void print_string(char *varName, struct String *string) {
-    printf("char[%zu] '%s'", string->length, string->list);
+void print_string(char *fileName, size_t line, struct String *string) {
+    NEW_STRING(X);
+    string_add(X, "String [%zu:%zu] {\n", string->length, string->allocated);
+    string_add(X, "    %s'%s'%s\n", ANSI_COLOR_GREEN, string->list, ANSI_COLOR_RESET);
+    string_add(X, "}\n");
+
+    LOGGER_LOG(fileName, line, X->list);
+    // LOGGER_LOG(fileName, line, "(%zu)%s'%s'%s", string->length, ANSI_COLOR_GREEN, string->list, ANSI_COLOR_RESET);
+    DESTROY_STRING(X);
 }
 
-void print_string_array(char *varName, struct StringArray *array) {
+void print_string_array(char *fileName, size_t line, struct StringArray *array) {
     size_t totalSize = 0;
     for (size_t j = 0; j < array->length; ++j)
         totalSize += array->list[j]->allocated;
 
-    printf("StringArray %s [%zu] {\n", varName, totalSize);
+    NEW_STRING(X);
+
+    string_add(X, "StringArray [%zu:%zu] {\n", array->length, totalSize);
     for (size_t i = 0; i < array->length; ++i) {
-        printf("    ");
-        PRINT(array->list[i]);
-        if (i < array->length - 1) printf(",\n");
+        // PRINT(array->list[i]);
+        string_add(X, "    (%s%zu%s)%s'%s'%s", ANSI_COLOR_RED, array->list[i]->length, ANSI_COLOR_RESET, ANSI_COLOR_GREEN, array->list[i]->list, ANSI_COLOR_RESET);
+        if (i < array->length - 1) string_add(X, ",\n");
     }
-    printf("\n}\n");
+    string_add(X, "\n}\n");
+
+    LOGGER_LOG(fileName, line, X->list);
+    DESTROY_STRING(X);
 }
 
 void string_put(struct String *string, const char *str) {
@@ -75,9 +82,9 @@ void string_add(struct String *string, char *format, ...) {
     //MEMORY_OUT;
 }
 
-struct StringArray string_split(char *string, const char *delimiter, size_t maxAmount) {
+struct StringArray * string_split(char *string, const char *delimiter, size_t maxAmount) {
     //MEMORY_IN;
-    VAR_STRING_ARRAY(out);
+    NEW_STRING_ARRAY(out);
     //MEMORY_OUT;
 
     size_t strLen = strlen(string);
@@ -100,7 +107,7 @@ struct StringArray string_split(char *string, const char *delimiter, size_t maxA
                 char *temp = MEMORY_ALLOCATE(tempLength - delimiterLen + 1);
                 MEMORY_COPY(temp, string + stringLastPosition, tempLength - delimiterLen, temp, tempLength - delimiterLen);
                 //MEMORY_IN;
-                string_array_push(&out, temp);
+                string_array_push(out, temp);
                 //MEMORY_OUT;
                 MEMORY_FREE(temp);
 
@@ -122,10 +129,9 @@ struct StringArray string_split(char *string, const char *delimiter, size_t maxA
     if (tempLength > 0) {
         char *temp = MEMORY_ALLOCATE(tempLength + 1);
         MEMORY_COPY(temp, string + stringLastPosition, tempLength, temp, tempLength);
-        string_array_push(&out, temp);
+        string_array_push(out, temp);
         MEMORY_FREE(temp);
     }
-
 
     return out;
 }
@@ -142,9 +148,9 @@ void string_array_push(struct StringArray *array, char *string) {
 
 struct String *string_array_join(struct StringArray *array, char *glue) {
     NEW_STRING(str);
-    /*for (size_t i = 0; i < array->length; ++i) {
+    for (size_t i = 0; i < array->length; ++i) {
         string_put(str, array->list[i]->list);
         if (i < array->length - 1) string_put(str, glue);
-    }*/
+    }
     return str;
 }

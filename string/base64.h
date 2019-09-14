@@ -1,5 +1,4 @@
-#ifndef TEST_BASE64_H
-#define TEST_BASE64_H
+#pragma once
 
 static const char b64_table[] = {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
@@ -13,5 +12,3 @@ static const char b64_table[] = {
 };
 
 char *base64_encode (const unsigned char *, size_t);
-
-#endif //TEST_BASE64_H

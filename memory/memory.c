@@ -207,7 +207,7 @@ void ____memory_print_state() {
 void *____memory_allocate(char *fileName, char *function, size_t line, size_t size) {
     void *pointer = calloc(1, size);
     if (!pointer) {
-        printf("Can't ALLOC[%zu] -> %s() %s:%zu\n", size, function, file_get_filename(fileName), line);
+        printf("Can't ALLOC[%zu] -> %s() %s:%zu\n", size, function, fileName, line);
         exit(1);
     }
 
@@ -290,6 +290,10 @@ void *____memory_reallocate(char *fileName, char *function, size_t line, void *p
         exit(1);
     }
 
+    // Change reallocated size
+    GLOBAL_MEMORY_STATUS->allocationTotalSize -= block->size;
+    GLOBAL_MEMORY_STATUS->allocationTotalSize += size;
+
     void *ptr = realloc(pointer, size);
     block->pointer = ptr;
     block->size = size;
@@ -349,7 +353,7 @@ void ____memory_allow_exit(char *fileName, char *function, size_t line, char *po
 void ____memory_copy(char *fileName, char *function, size_t line, void *__restrict dst, const void *__restrict src, size_t len, void *__restrict dstStart, size_t dstLen) {
     size_t borderEnd = (size_t) (dstStart + dstLen);
     if ((size_t)(dst + len) > borderEnd) {
-        printf("Out of border at %zu bytes in -> %s() %s:%zu\n", ((size_t)(dst + len) - borderEnd), function, file_get_filename(fileName), line);
+        printf("Out of border at %zu bytes in -> %s() %s:%zu\n", ((size_t)(dst + len) - borderEnd), function, fileName, line);
         exit(1);
     }
     memcpy(dst, src, len);
@@ -380,6 +384,6 @@ void ____memory_free(char *fileName, char *function, size_t line, char *pointerN
             return;
         }
     }
-    printf("Trying to free pointer %s[%p] that not found -> %s() %s:%zu\n", pointerName, pointer, function, file_get_filename(fileName), line);
+    printf("Trying to free pointer %s[%p] that not found -> %s() %s:%zu\n", pointerName, pointer, function, fileName, line);
     exit(1);
 }

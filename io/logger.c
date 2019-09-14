@@ -1,0 +1,100 @@
+#include "logger.h"
+#include <time.h>
+#include <asm/ioctls.h>
+#include <sys/ioctl.h>
+#include <libgen.h>
+
+void logger_log(const char *fileName, size_t line, const char *format, ...) {
+    // Time
+    time_t rawtime;
+    struct tm *timeinfo;
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    // char *fi = fileName;
+
+    fileName = basename((char *)fileName);
+
+    //
+    NEW_STRING(string);
+
+    va_list argPtr;
+    va_start(argPtr, format);
+
+    // Measure string length
+    size_t length = vsnprintf(NULL, 0, format, argPtr);
+    char *str = MEMORY_ALLOCATE(length + 1);
+
+    // Add formatted string
+    va_start(argPtr, format);
+    vsprintf(str, format, argPtr);
+    string_put(string, str);
+    MEMORY_FREE(str);
+    va_end(argPtr);
+
+    char *leftPad = "                 ";
+    printf(ANSI_COLOR_YELLOW);
+    printf("[INFO] %2.d:%2.d:%2.d  ", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+    printf(ANSI_COLOR_RESET);
+
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
+    // printf ("lines %d\n", w.ws_row);
+    // printf ("columns %d\n", w.ws_col);
+
+    size_t used = 17;
+    size_t maxStringLength = w.ws_col - strlen(fileName) - 21 - 4;
+
+    struct StringArray *tuples = string_split(string->list, "\n", 0);
+    for (size_t i = 0; i < tuples->length; ++i) {
+        char stringCopy[tuples->list[i]->length + 1];
+        MEMORY_COPY(stringCopy, tuples->list[i]->list, tuples->list[i]->length + 1, stringCopy, tuples->list[i]->allocated);
+        if (tuples->list[i]->length > maxStringLength) {
+            stringCopy[maxStringLength - 3] = '.';
+            stringCopy[maxStringLength - 2] = '.';
+            stringCopy[maxStringLength - 1] = '.';
+            stringCopy[maxStringLength] = 0;
+        }
+
+        if (i > 0) printf("%s│  %s", leftPad, stringCopy);
+        else printf("│  %s", stringCopy);
+        used += strlen(stringCopy) + 3;
+
+        if (i == 0) {
+            int32_t spaces = w.ws_col - strlen(fileName) - 4 - used;
+            // printf("[%zu]", spaces);
+            if (spaces > 0) {
+                char gas[spaces + 1];
+
+                // printf("SSSS %d sSSS", spaces);
+
+                memset(gas, 0, spaces + 1);
+                memset(gas, ' ', spaces);
+                printf(ANSI_COLOR_GREEN);
+                printf("%s%s:%zu", gas, fileName, line);
+                printf(ANSI_COLOR_RESET);
+            }
+        }
+
+        printf("\n");
+    }
+
+    int32_t size = (w.ws_col - strlen(leftPad)) * 3;
+    char *s = MEMORY_ALLOCATE(size + 1);
+
+    for (size_t j = 0; j < w.ws_col - strlen(leftPad) - 1; ++j) {
+        sprintf(s + strlen(s), "─");
+    }
+
+    MEMORY_FREE(s);
+
+    // wchar_t wchar = "─";
+    // wmemset(s, wchar, w.ws_col - strlen(leftPad) - 1);
+    // memset(s, '_', w.ws_col - strlen(leftPad) - 1);
+    printf("%s├%s\n", leftPad, s);
+
+    DESTROY_STRING_ARRAY(tuples);
+    DESTROY_STRING(string);
+    // printf("[INFO] %2.d:%2.d:%2.d  %s                       %s:%zu\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, string->list, fileName, line);
+}
