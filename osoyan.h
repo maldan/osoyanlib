@@ -10,13 +10,22 @@
 #include <math.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <stdarg.h>
 
-#define RESIZE_ARRAY_IF_NEED(A, S) if (A->length + S > A->allocated) {\
-A->list = MEMORY_REALLOCATE(A->list, A->allocated * 2 * sizeof(size_t));\
+#include "memory/memory.h"
+#include "string.h"
+#include "base64.h"
+#include "chars.h"
+#include "file.h"
+
+#define RESIZE_ARRAY_IF_NEED(A, S, EL_SIZE) if (A->length + S > A->allocated) {\
+size_t _minToAdd34cdf33435_Sdfsd4x = (A->length + S) - A->allocated; \
+A->list = MEMORY_REALLOCATE(A->list, _minToAdd34cdf33435_Sdfsd4x + A->allocated * 2 * sizeof(EL_SIZE));\
 A->allocated *= 2;\
+A->allocated += _minToAdd34cdf33435_Sdfsd4x;\
 } 1
 
-#define INIT_DEFAULT_LIST_SIZE(A) A->list = MEMORY_ALLOCATE_AT(fileName, function, line, sizeof(size_t) * 4);\
+#define INIT_DEFAULT_LIST_SIZE(A, TYPE) A->list = MEMORY_ALLOCATE(sizeof(TYPE) * 4);\
 A->length = 0;\
 A->allocated = 4
 
@@ -26,8 +35,5 @@ struct String*: print_string, \
 struct StringArray*: print_string_array, \
 default: default_print)(#O, O)
 
-void chars_print(char *, void *);
 void default_print(char *, void *);
 
-#include "memory.h"
-#include "file.h"
