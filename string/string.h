@@ -2,22 +2,18 @@
 
 #include "../osoyan.h"
 
-#define NEW_STRING(X) struct String *X = MEMORY_ALLOCATE(sizeof(struct String)); ____string_init(X)
+#define NEW_STRING(X) struct String *X = MEMORY_ALLOCATE_STRUCT(String); ____string_init(X)
 #define DESTROY_STRING(X) ____string_free(X)
 
-#define NEW_STRING_ARRAY(X) struct StringArray *X = MEMORY_ALLOCATE(sizeof(struct StringArray)); ____string_array_init(X)
+#define NEW_STRING_ARRAY(X) struct StringArray *X = MEMORY_ALLOCATE_STRUCT(StringArray); ____string_array_init(X)
 #define DESTROY_STRING_ARRAY(X) ____string_array_free(X)
 
 struct String {
-    char *list;
-    size_t length;
-    size_t allocated;
+    DEFAULT_ARRAY_STRUCT(char *)
 };
 
 struct StringArray {
-    struct String **list;
-    size_t length;
-    size_t allocated;
+    DEFAULT_ARRAY_STRUCT(struct String **)
 };
 
 void ____string_init(struct String *string);
@@ -29,6 +25,7 @@ void ____string_array_free(struct StringArray *array);
 void string_put(struct String *string, const char *str);
 void string_add(struct String *string, char *format, ...);
 struct StringArray * string_split(char *string, const char *delimiter, size_t maxAmount);
+struct String * string_break(struct String *string, size_t maxLength);
 void print_string(char *fileName, size_t line, struct String *string);
 
 /// String array

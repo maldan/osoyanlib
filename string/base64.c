@@ -31,9 +31,8 @@ char *base64_encode(const unsigned char *src, size_t len) {
             // part by index from the base 64 index table
             // into `enc' unsigned char array
             enc = (char *) MEMORY_REALLOCATE(enc, size + 4);
-            for (i = 0; i < 4; ++i) {
-                enc[size++] = b64_table[buf[i]];
-            }
+            for (i = 0; i < 4; ++i)
+                enc[size++] = base64_table[buf[i]];
 
             // reset index
             i = 0;
@@ -43,9 +42,7 @@ char *base64_encode(const unsigned char *src, size_t len) {
     // remainder
     if (i > 0) {
         // fill `tmp' with `\0' at most 3 times
-        for (j = i; j < 3; ++j) {
-            tmp[j] = '\0';
-        }
+        for (j = i; j < 3; ++j) tmp[j] = '\0';
 
         // perform same codec as above
         buf[0] = (tmp[0] & 0xfc) >> 2;
@@ -56,7 +53,7 @@ char *base64_encode(const unsigned char *src, size_t len) {
         // perform same write to `enc` with new allocation
         for (j = 0; (j < i + 1); ++j) {
             enc = (char *) MEMORY_REALLOCATE(enc, size + 1);
-            enc[size++] = b64_table[buf[j]];
+            enc[size++] = base64_table[buf[j]];
         }
 
         // while there is still a remainder

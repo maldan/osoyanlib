@@ -1,6 +1,6 @@
 #pragma once
 
-static const char b64_table[] = {
+static const char base64_table[] = {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
         'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
         'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
