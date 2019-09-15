@@ -19,6 +19,14 @@ void ____string_array_free(struct StringArray *array) {
 }
 
 // Just concatenate string with chars
+void string_put_char(struct String *string, const char str) {
+    RESIZE_ARRAY_IF_NEED(string, 1, char);
+    string->length += 1;
+    string->list[string->length - 1] = str;
+    string->list[string->length] = 0;
+}
+
+// Just concatenate string with chars
 void string_put(struct String *string, const char *str) {
     size_t len = strlen(str);
     RESIZE_ARRAY_IF_NEED(string, len + 1, char);
@@ -61,8 +69,32 @@ struct String * string_break(struct String *string, size_t maxLength) {
             i -= 1;
             continue;
         }
-        string_add(X, "%c", string->list[i]);
+        string_put_char(X, string->list[i]);
     }
+    return X;
+}
+
+struct String * string_indent(struct String *string, size_t indent) {
+    NEW_STRING(indentData);
+    for (size_t i = 0; i < indent; ++i) string_put_char(indentData, ' ');
+
+    NEW_STRING(X);
+    bool isNewLine = true;
+    for (size_t i = 0; i < string->length; ++i) {
+        if (isNewLine) {
+            string_put(X, indentData->list);
+            isNewLine = false;
+            i -= 1;
+            continue;
+        }
+        if (string->list[i] == '\n') {
+            string_put(X, "\n");
+            isNewLine = true;
+            continue;
+        }
+        string_put_char(X, string->list[i]);
+    }
+    DESTROY_STRING(indentData);
     return X;
 }
 
@@ -126,6 +158,14 @@ void string_array_push(struct StringArray *array, char *string) {
     array->length++;
 }
 
+void string_array_clear(struct StringArray *array) {
+    for (size_t i = 0; i < array->length; ++i) {
+        ____string_free(array->list[i]);
+        // MEMORY_FREE(array->list[i]);
+    }
+    array->length = 0;
+}
+
 // Join string array into single string
 struct String *string_array_join(struct StringArray *array, char *glue) {
     NEW_STRING(str);
@@ -141,7 +181,7 @@ void string_array_remove_at(struct StringArray *array, size_t at, size_t amount)
 }
 
 // Print string
-void print_string(char *fileName, size_t line, struct String *string) {
+char * print_string(char *fileName, size_t line, struct String *string, bool writeToBuffer) {
     NEW_STRING(X);
     string_add(X, "String [%zu:%zu] {\n", string->length, string->allocated);
     string_add(X, "    %s'%s'%s\n", ANSI_COLOR_GREEN, string->list, ANSI_COLOR_RESET);
@@ -149,10 +189,11 @@ void print_string(char *fileName, size_t line, struct String *string) {
 
     LOGGER_LOG(fileName, line, X->list);
     DESTROY_STRING(X);
+    return 0;
 }
 
 // Print string array
-void print_string_array(char *fileName, size_t line, struct StringArray *array) {
+char* print_string_array(char *fileName, size_t line, struct StringArray *array, bool writeToBuffer) {
     size_t totalSize = 0;
     for (size_t j = 0; j < array->length; ++j)
         totalSize += array->list[j]->allocated;
@@ -168,4 +209,5 @@ void print_string_array(char *fileName, size_t line, struct StringArray *array) 
 
     LOGGER_LOG(fileName, line, X->list);
     DESTROY_STRING(X);
+    return 0;
 }

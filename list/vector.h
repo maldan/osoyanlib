@@ -7,7 +7,7 @@
 #include <assert.h>
 #include "../osoyan.h"
 
-#define NEW_VECTOR(X, T) struct Vector *X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T);
+#define NEW_VECTOR(X, T) struct Vector *X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T)
 #define DESTROY_VECTOR(X) ____vector_free(X)
 
 struct Vector {
@@ -20,7 +20,7 @@ void ____vector_free(struct Vector *vector);
 
 void vector_push(struct Vector *vector, void *value);
 void *vector_get(struct Vector *vector, size_t position);
-void print_vector(char *fileName, size_t line, struct Vector *vector);
+char* print_vector(char *fileName, size_t line, struct Vector *vector, bool writeToBuffer);
 
 /*int vector_get(struct Vector *vector, size_t index, void **out);
 void vector_push(struct Vector *vector, void *value);

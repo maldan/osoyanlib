@@ -28,6 +28,32 @@ long chars_to_long(const char *str) {
     return atol(num);
 }
 
-void chars_print(const char *fileName, size_t line, void *data) {
+char *chars_substr(const char *where, long from, long to) {
+    size_t len = to - from;
+    char *sas = MEMORY_ALLOCATE(len + 1);
+    MEMORY_COPY(sas, where + from, len, sas, len);
+    return sas;
+}
+
+long chars_index_of(const char *where, const char *index) {
+    size_t len = strlen(where);
+    size_t indexId = 0;
+    size_t indexLen = strlen(index);
+
+    for (size_t i = 0; i < len; ++i) {
+        if (where[i] == index[indexId++]) {
+            if (indexId == indexLen) {
+                return (long)(i + 1) - (long)indexLen;
+            }
+        } else {
+            indexId = 0;
+        }
+    }
+
+    return -1;
+}
+
+char* print_chars(const char *fileName, size_t line, void *data, bool writeToBuffer) {
     LOGGER_LOG(fileName, line, "%s", data);
+    return 0;
 }

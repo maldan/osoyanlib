@@ -60,7 +60,7 @@ void blob_put64(struct Blob *blob, int64_t value, size_t position) {
     blob_put(blob, value, 8, position);
 }
 
-void print_blob(char *fileName, size_t line, struct Blob *blob) {
+char* print_blob(char *fileName, size_t line, struct Blob *blob, bool writeToBuffer) {
     NEW_STRING(X);
     size_t counter = 0;
     for (size_t i = 0; i < blob->length; ++i) {
@@ -73,4 +73,5 @@ void print_blob(char *fileName, size_t line, struct Blob *blob) {
     string_add(X, "\n");
     LOGGER_LOG(fileName, line, X->list);
     DESTROY_STRING(X);
+    return 0;
 }

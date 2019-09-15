@@ -33,9 +33,9 @@ struct MemoryBlock {
 #define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) ____memory_copy(__BASE_FILE__, (char *)__FUNCTION__, __LINE__, DST, SRC, SIZE, DST_START, DST_SIZE)
 #else
 #define MEMORY_INIT NULL
-#define MEMORY_ALLOCATE_AT(F, A) calloc(1, A)
+#define MEMORY_ALLOCATE_AT(FL, FN, L, A) calloc(1, A)
 #define MEMORY_ALLOCATE(A) calloc(1, A)
-#define MEMORY_ALLOCATE_STRUCT(A) calloc(1, sizeof(A))
+#define MEMORY_ALLOCATE_STRUCT(A) calloc(1, sizeof(struct A))
 #define MEMORY_REALLOCATE(A, S) realloc(A, S)
 #define MEMORY_FREE(P) free(P)
 #define MEMORY_PRINT_STATE NULL

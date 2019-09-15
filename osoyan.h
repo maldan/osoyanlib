@@ -11,6 +11,8 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <stdarg.h>
+#include <libgen.h>
+#include <dirent.h>
 
 #define DEFAULT_ARRAY_STRUCT(TYPE) TYPE list;\
 size_t length;\
@@ -32,13 +34,17 @@ A->length = 0;\
 A->allocated = 4
 
 #define PRINT(O) _Generic((O), \
-char*: chars_print, \
+char*: print_chars, \
 struct String*: print_string, \
 struct StringArray*: print_string_array, \
 struct Vector*: print_vector, \
 struct FileInfo*: print_file_info, \
 struct Blob*: print_blob, \
-default: default_print)(__FILE__, __LINE__, O)
+default: print_default)(__FILE__, __LINE__, O, false)
+
+#define PRINT_TO_BUFFER(O) _Generic((O), \
+struct FileInfo*: print_file_info, \
+default: print_default)(__FILE__, __LINE__, O, true)
 
 #include "memory/memory.h"
 #include "string/string.h"
@@ -52,5 +58,5 @@ default: default_print)(__FILE__, __LINE__, O)
 #include "list/blob.h"
 #include "list/vector.h"
 
-void default_print(const char *fileName, size_t line, void *data);
+char * print_default(const char *fileName, size_t line, void *data, bool writeToBuffer);
 

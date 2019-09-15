@@ -30,5 +30,5 @@ void blob_put64(struct Blob *blob, int64_t value, size_t position);
 void blob_put_chars(struct Blob *blob, char *chars, size_t position);
 void blob_concat(struct Blob *dst, struct Blob *src);
 
-void print_blob(char *fileName, size_t line, struct Blob *blob);
+char* print_blob(char *fileName, size_t line, struct Blob *blob, bool writeToBuffer);
 // void blob_print(struct Blob *dst, size_t size);
