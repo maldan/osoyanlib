@@ -25,7 +25,7 @@ void vector_remove_at(struct Vector *vector, size_t at, size_t amount) {
 }
 
 // Print string array
-char* print_vector(char *fileName, size_t line, struct Vector *vector, bool writeToBuffer) {
+struct String * print_vector(char *fileName, size_t line, struct Vector *vector, bool writeToBuffer) {
     NEW_STRING(X);
 
     string_add(X, "Vector %s [%zu:%zu] {\n", vector->type, vector->length, vector->allocated);

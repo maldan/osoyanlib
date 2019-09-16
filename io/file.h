@@ -27,10 +27,9 @@ struct FileInfo {
 };
 
 /**
- * Get content of file at specified $path$. Return %struct FileInfo% with info about file such as length, name, path and data.
- * If file not found, function returns 0.
+ * Get content of file at specified $path$.
  * @param path - Path of source file
- * @return
+ * @return Returns %struct FileInfo% with info about file such as length, name, path and data. If file not found, function returns 0.
  */
 struct FileInfo *file_get_contents(const char *path);
 
@@ -39,17 +38,16 @@ struct FileInfo *file_get_contents(const char *path);
  * @param path - Path of destination file
  * @param buffer - Buffer with data, can be string or byte array
  * @param length - Length of content, if $length$ is 0 then length will be result of strlen($buffer$)
- * @return
+ * @return Return !true! if success otherwise returns !false!.
  */
 bool file_put_contents(const char *path, void *buffer, size_t length);
 
 /**
- * Recursively search files with regex $filter$ at specified $path$. If $filter$ is !NULL! return all files.
- * Returns %struct Vector% of %struct FileInfo%.
+ * Recursively search files with regex $filter$ at specified $path$.
  * @param path - Path of directory to search files
  * @param filter - Regex for filter
  * @param flags - 0 return files, !FILE_INFO_INCLUDE_DATA! include content to files
- * @return
+ * @return Returns %struct Vector% with %struct FileInfo% elements. Return all files if $filter$ is !NULL!.
  */
 struct Vector *file_search(const char *path, const char *filter, size_t flags);
 
@@ -59,6 +57,6 @@ struct Vector *file_search(const char *path, const char *filter, size_t flags);
  * @param line - Current line, usually result of macros !__LINE__!
  * @param file - Struct with file info
  * @param writeToBuffer - Write to buffer or to screen
- * @return
+ * @return Returns %struct String *% if $writeToBuffer$ is !true!
  */
 struct String *print_file_info(const char *fileName, size_t line, struct FileInfo *file, bool writeToBuffer);

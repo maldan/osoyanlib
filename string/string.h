@@ -1,3 +1,11 @@
+/**
+ * This file contains functions for working with strings and string arrays. By strings means %struct String% not %char%. For %char% there is another file #chars.h#.
+ * %struct String% is like dynamic array for %char%. It contains fields like $list$, $length$ and $allocated$.
+ * You can add new chars to string and it will be dynamically resized by need.
+ * There is also %struct StringArray% and functions for it. String array is like vector of %struct String% but there is differences.
+ * For example vector contains only reference to real object. But string array contain references to a copy of real object. So it can be safely disposed later.
+ */
+
 #pragma once
 
 #include "../osoyan.h"
@@ -17,25 +25,25 @@ struct StringArray {
 };
 
 /**
- * Init string
+ * Init %struct String%. Don't use this function directly, instead use macros !NEW_STRING!
  * @param string - Current string
  */
 void ____string_init(struct String *string);
 
 /**
- * Destroy string
+ * Destroy %struct String%. Don't use this function directly, instead use macros !DESTROY_STRING!
  * @param string - Current string
  */
 void ____string_free(struct String *string);
 
 /**
- * Init string array
+ * Init %struct StringArray%. Don't use this function directly, instead use macros !NEW_STRING_ARRAY!
  * @param array - Current string
  */
 void ____string_array_init(struct StringArray *array);
 
 /**
- * Destroy string array
+ * Destroy %struct StringArray%. Don't use this function directly, instead use macros !DESTROY_STRING_ARRAY!
  * @param array - Current string
  */
 void ____string_array_free(struct StringArray *array);
@@ -64,21 +72,21 @@ void string_add(struct String *string, char *format, ...);
 
 /**
  * Break $string$ (or just wrap $string$ on new line) if it contains more than $maxLength$ chars on line.
- * Return result as new %struct String%. Function can take $string$ with multilines not only single lined $string$.
+ * Function can take $string$ with multilines not only single lined $string$.
  * Function doesn't works correctly with ansi sequences by now.
  * @param string - Source string
  * @param maxLength - Max length of line
- * @return
+ * @return Return formatted result as new %struct String%.
  */
-struct String * string_break(struct String *string, size_t maxLength);
+struct String *string_break(struct String *string, size_t maxLength);
 
 /**
- * Add $indent$ on each line and return result as new %struct String%.
+ * Add $indent$ on each line.
  * @param string - Source string
  * @param indent - Amount of spaces before each line
- * @return
+ * @return Return formatted result as new %struct String%.
  */
-struct String * string_indent(struct String *string, size_t indent);
+struct String *string_indent(struct String *string, size_t indent);
 
 /**
  * Almost same as print_chars but also prints some info about $string$ because $string$ is %struct String% not %char%.
@@ -86,9 +94,9 @@ struct String * string_indent(struct String *string, size_t indent);
  * @param line - Current line, usually result of macros !__LINE__!
  * @param string - %struct String%, not just %char%
  * @param writeToBuffer - Write to buffer or to screen
- * @return
+ * @return Returns %struct String *% if $writeToBuffer$ is !true!
  */
-char* print_string(char *fileName, size_t line, struct String *string, bool writeToBuffer);
+struct String *print_string(char *fileName, size_t line, struct String *string, bool writeToBuffer);
 
 /**
  * Add $string$ into $array$. Note that function make copy of $string$ not just reference it.
@@ -102,7 +110,7 @@ void string_array_push(struct StringArray *array, char *string);
  * For example if array contain strings ["1", "2", "3"] and glue is "-" then we will get %struct String% that contains "1-2-3" result.
  * @param array - Array of strings
  * @param glue - Contain chars that will be between strings. Also can be !NULL!
- * @return
+ * @return Returns %struct String% that contains concatenated strings
  */
 struct String *string_array_join(struct StringArray *array, char *glue);
 
@@ -119,6 +127,6 @@ void string_array_clear(struct StringArray *array);
  * @param line - Current line, usually result of macros !__LINE__!
  * @param array - Array of strings
  * @param writeToBuffer - Write to buffer or to screen
- * @return
+ * @return Returns %struct String *% if $writeToBuffer$ is !true!
  */
-char* print_string_array(char *fileName, size_t line, struct StringArray *array, bool writeToBuffer);
+struct String *print_string_array(char *fileName, size_t line, struct StringArray *array, bool writeToBuffer);

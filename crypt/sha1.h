@@ -5,8 +5,8 @@
 #include <stdint.h>
 
 /**
- * Encrypt $str$ by sha1 algorithm and return result as byte array %struct Blob%
+ * Hash $str$ by sha1 algorithm.
  * @param str - Source string
- * @return
+ * @return Return byte array %struct Blob% with 20 bytes of representation the hash.
  */
 struct Blob * sha1_chars(char *str);

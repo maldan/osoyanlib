@@ -50,9 +50,9 @@ void *vector_get(struct Vector *vector, size_t position);
  * @param line - Current line, usually result of macros !__LINE__!
  * @param vector - Vector
  * @param writeToBuffer - Write to buffer or to screen
- * @return
+ * @return Returns %struct String *% if $writeToBuffer$ is !true!
  */
-char* print_vector(char *fileName, size_t line, struct Vector *vector, bool writeToBuffer);
+struct String * print_vector(char *fileName, size_t line, struct Vector *vector, bool writeToBuffer);
 
 /*int vector_get(struct Vector *vector, size_t index, void **out);
 void vector_push(struct Vector *vector, void *value);

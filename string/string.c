@@ -130,7 +130,7 @@ void string_array_remove_at(struct StringArray *array, size_t at, size_t amount)
 }
 
 // Print string
-char * print_string(char *fileName, size_t line, struct String *string, bool writeToBuffer) {
+struct String *print_string(char *fileName, size_t line, struct String *string, bool writeToBuffer) {
     NEW_STRING(X);
     string_add(X, "String [%zu:%zu] {\n", string->length, string->allocated);
     string_add(X, "    %s'%s'%s\n", ANSI_COLOR_GREEN, string->list, ANSI_COLOR_RESET);
@@ -142,7 +142,7 @@ char * print_string(char *fileName, size_t line, struct String *string, bool wri
 }
 
 // Print string array
-char* print_string_array(char *fileName, size_t line, struct StringArray *array, bool writeToBuffer) {
+struct String *print_string_array(char *fileName, size_t line, struct StringArray *array, bool writeToBuffer) {
     size_t totalSize = 0;
     for (size_t j = 0; j < array->length; ++j)
         totalSize += array->list[j]->allocated;

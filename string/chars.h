@@ -11,32 +11,31 @@ memcpy(V, SRC, strlen(SRC));\
 /**
  * Convert first corrects chars to %int%
  * @param source - Source chars array
- * @return
+ * @return Returns int
  */
 int chars_to_int(const char *source);
 
 /**
  * Convert first corrects chars to %long%
  * @param source - Source chars array
- * @return
+ * @return Returns long
  */
 long chars_to_long(const char *source);
 
 /**
- * Returns index of found $pattern$. Returns -1 if $pattern$ not found.
+ * Get index of $pattern$
  * @param where - Source chars array
  * @param pattern - Search pattern
- * @return
+ * @return Returns index of found $pattern$. Returns -1 if $pattern$ not found.
  */
 long chars_index_of(const char *where, const char *pattern);
 
 /**
- * Returns slice of chars with specified $length$ starting from $startIndex$. Returns "" if slice is incorrect.
- * Function trim slice end if $length$ is out of range.
+ * Get substring of string. Function trim slice end if $length$ is out of range.
  * @param where - Source chars array
  * @param startIndex - Start index of source chars array
  * @param length - Length of slice
- * @return
+ * @return Returns slice of chars with specified $length$ starting from $startIndex$. Returns "" if slice is incorrect.
  */
 char *chars_substr(const char *where, long startIndex, long length);
 
@@ -47,7 +46,7 @@ char *chars_substr(const char *where, long startIndex, long length);
  * @param string
  * @param delimiter
  * @param maxAmount
- * @return
+ * @return Return %struct StringArray% that contains all splits strings
  */
 struct StringArray * chars_split(char *string, const char *delimiter, size_t maxAmount);
 
@@ -57,6 +56,6 @@ struct StringArray * chars_split(char *string, const char *delimiter, size_t max
  * @param line - Current line, usually result of macros !__LINE__!
  * @param data - Chars array
  * @param writeToBuffer - Write to buffer or to screen
- * @return
+ * @return Returns %struct String *% if $writeToBuffer$ is !true!
  */
-char *print_chars(const char *fileName, size_t line, void *data, bool writeToBuffer);
+struct String *print_chars(const char *fileName, size_t line, void *data, bool writeToBuffer);

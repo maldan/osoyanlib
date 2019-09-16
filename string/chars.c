@@ -104,7 +104,7 @@ struct StringArray * chars_split(char *string, const char *delimiter, size_t max
     return out;
 }
 
-char* print_chars(const char *fileName, size_t line, void *data, bool writeToBuffer) {
+struct String *print_chars(const char *fileName, size_t line, void *data, bool writeToBuffer) {
     LOGGER_LOG(fileName, line, "%s", data);
     return 0;
 }

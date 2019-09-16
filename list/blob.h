@@ -93,6 +93,6 @@ void blob_pub_blob(struct Blob *blob, struct Blob *src);
  * @param line - Current line, usually result of macros !__LINE__!
  * @param blob - Array of bytes
  * @param writeToBuffer - Write to buffer or to screen
- * @return
+ * @return Returns %struct String *% if $writeToBuffer$ is !true!
  */
-char* print_blob(char *fileName, size_t line, struct Blob *blob, bool writeToBuffer);
+struct String * print_blob(char *fileName, size_t line, struct Blob *blob, bool writeToBuffer);

@@ -61,7 +61,7 @@ void ____memory_print_state();
  * @param function - Function where allocation was made, usually results of macros !__FUNCTION__!
  * @param line - Line where allocation was made, usually results of macros !__LINE__!
  * @param amount - Amount of allocated memory
- * @return
+ * @return Returns pointer to allocated memory block
  */
 void *____memory_allocate(char *fileName, char *function, size_t line, size_t amount);
 
@@ -72,7 +72,7 @@ void *____memory_allocate(char *fileName, char *function, size_t line, size_t am
  * @param line - Line where allocation was made, usually results of macros !__LINE__!
  * @param pointer - Pointer to reallocate memory
  * @param amount - New amount of memory
- * @return
+ * @return Returns pointer to reallocated memory block
  */
 void *____memory_reallocate(char *fileName, char *function, size_t line, void *pointer, size_t amount);
 

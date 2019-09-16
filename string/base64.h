@@ -17,6 +17,6 @@ static const char base64_table[] = {
  * Encode some block $data$ with specified $length$ into base64 string.
  * @param data - Byte array
  * @param length - Length of byte array
- * @return
+ * @return Returns encoded string as %char *%
  */
 char *base64_encode(const uint8_t *data, size_t length);
