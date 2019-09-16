@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 static const char base64_table[] = {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
         'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -11,4 +13,10 @@ static const char base64_table[] = {
         '4', '5', '6', '7', '8', '9', '+', '/'
 };
 
-char *base64_encode (const unsigned char *, size_t);
+/**
+ * Encode some block $data$ with specified $length$ into base64 string.
+ * @param data - Byte array
+ * @param length - Length of byte array
+ * @return
+ */
+char *base64_encode(const uint8_t *data, size_t length);

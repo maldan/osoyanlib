@@ -31,7 +31,7 @@ long chars_to_long(const char *source);
 long chars_index_of(const char *where, const char *pattern);
 
 /**
- * Returns slice of chars with specified $length$ starting from $startIndex$. Returns \"\" if slice is incorrect.
+ * Returns slice of chars with specified $length$ starting from $startIndex$. Returns "" if slice is incorrect.
  * Function trim slice end if $length$ is out of range.
  * @param where - Source chars array
  * @param startIndex - Start index of source chars array
@@ -39,6 +39,17 @@ long chars_index_of(const char *where, const char *pattern);
  * @return
  */
 char *chars_substr(const char *where, long startIndex, long length);
+
+/**
+ * Split chars array $string$ into pieces by $delimiter$. The result will be stored into new %struct StringArray%.
+ * Function also take $maxAmount$ argument. If it 0 then function will split to the end of the $string$.
+ * If it 1 then function split only once, for example "1-2-3" will return ["1", "2-3"].
+ * @param string
+ * @param delimiter
+ * @param maxAmount
+ * @return
+ */
+struct StringArray * chars_split(char *string, const char *delimiter, size_t maxAmount);
 
 /**
  * Just print chars

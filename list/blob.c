@@ -23,12 +23,12 @@ void blob_put(struct Blob *blob, uint64_t value, size_t size, size_t position) {
     }
 }
 
-void blob_put_auto(struct Blob *blob, uint64_t value, size_t position) {
+/*void blob_put_auto(struct Blob *blob, uint64_t value, size_t position) {
     if (value <= 255) blob_put8(blob, value, position);
     else if (value <= 65536) blob_put16(blob, value, position);
     else if (value <= 4294967295) blob_put32(blob, value, position);
     else blob_put64(blob, value, position);
-}
+}*/
 
 void blob_concat(struct Blob *dst, struct Blob *src) {
     // Resize blob

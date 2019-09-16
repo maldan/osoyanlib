@@ -2,7 +2,7 @@
 #include "base64.h"
 #include "../memory/memory.h"
 
-char *base64_encode(const unsigned char *src, size_t len) {
+char *base64_encode(const uint8_t *src, size_t len) {
     int i = 0;
     int j = 0;
     char *enc = NULL;

@@ -35,7 +35,7 @@ struct FileInfo {
 struct FileInfo *file_get_contents(const char *path);
 
 /**
- * Put $buffer$ into file specified $path$. It will replace previous content. File will be created if it's not exist.
+ * Put $buffer$ into a file at specified $path$. It will overwrite the previous file. File will be created if it doesnt't exist.
  * @param path - Path of destination file
  * @param buffer - Buffer with data, can be string or byte array
  * @param length - Length of content, if $length$ is 0 then length will be result of strlen($buffer$)

@@ -2,8 +2,10 @@
 
 struct FileInfo * file_get_contents(const char *path) {
     FILE *file = fopen(path, "rb");
-    if (!file)
+    if (!file) {
+        fprintf(stderr, "File \"%s\" not found\n", path);
         return 0;
+    }
 
     struct FileInfo *fileInfo = MEMORY_ALLOCATE_STRUCT(FileInfo);
     CLONE_CHARS(fileInfo->path, path, gen);

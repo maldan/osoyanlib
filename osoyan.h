@@ -58,5 +58,13 @@ default: print_default)(__FILE__, __LINE__, O, true)
 #include "list/blob.h"
 #include "list/vector.h"
 
+/**
+ * This is default printer for !PRINT! marcos. Just prints pointer of object. For example [0x7fffff00]
+ * @param fileName - Current file name, usually result of macros !__FILE__!
+ * @param line - Current line, usually result of macros !__LINE__!
+ * @param data - Some pointer
+ * @param writeToBuffer - Write to buffer or to screen
+ * @return
+ */
 char * print_default(const char *fileName, size_t line, void *data, bool writeToBuffer);
 

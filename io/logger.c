@@ -49,7 +49,7 @@ void logger_log(const char *fileName, size_t line, const char *format, ...) {
     DESTROY_STRING(string);
     string = slicedString;
 
-    struct StringArray *tuples = string_split(string->list, "\n", 0);
+    struct StringArray *tuples = chars_split(string->list, "\n", 0);
 
     for (size_t i = 0; i < tuples->length; ++i) {
         char stringCopy[tuples->list[i]->length + 1];

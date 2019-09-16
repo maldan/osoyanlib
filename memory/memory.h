@@ -42,20 +42,62 @@ struct MemoryBlock {
 #define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) memcpy(DST, SRC, SIZE)
 #endif
 
-// Init memory manager
+/**
+ * Init memory manager. You need put macros !MEMORY_INIT! at the start of ~main~ function.
+ */
 void ____memory_init();
 
-// Print info about allocation
+/**
+ * Prints current state of memory allocation. It prints all allocated pointers and places where allocation was made.
+ * It also prints total allocations of amount of pointers and total size in bytes. And also prints current allocation.
+ * If your current allocation is 0 pointer and [0] bytes it's cool, that means you free all memory you allocated and you
+ * doesn't have memory leak. Note, if you free pointer then information about allocation about the pointer removes from global table.
+ */
 void ____memory_print_state();
 
-// Allocate amount and return pointer
+/**
+ * Function similar to ~calloc~. It's just add information of allocation to the global table.
+ * @param fileName - File where allocation was made, usually results of macros !__FILE__!
+ * @param function - Function where allocation was made, usually results of macros !__FUNCTION__!
+ * @param line - Line where allocation was made, usually results of macros !__LINE__!
+ * @param amount - Amount of allocated memory
+ * @return
+ */
 void *____memory_allocate(char *fileName, char *function, size_t line, size_t amount);
 
-// Reallocate amount and return pointer
+/**
+ * Function similar to ~realloc~. But you can't reallocate pointer if it wasn't allocated by ~~____memory_allocate~~.
+ * @param fileName - File where allocation was made, usually results of macros !__FILE__!
+ * @param function - Function where allocation was made, usually results of macros !__FUNCTION__!
+ * @param line - Line where allocation was made, usually results of macros !__LINE__!
+ * @param pointer - Pointer to reallocate memory
+ * @param amount - New amount of memory
+ * @return
+ */
 void *____memory_reallocate(char *fileName, char *function, size_t line, void *pointer, size_t amount);
 
-// Allow point to exit from function
+/**
+ * Function similar to ~memcpy~. But it also take additional arguments for more memory safety.
+ * You have to pass start of pointer $dstStart$, not offset like ptr + 5, but ptr itself. And you also need to pass total size of memory block of ptr.
+ * For example you allocated 10 bytes by ptr = malloc(10). Now you have to pass ptr as $dstStart$ and 10 as $dstLen$.
+ * So function can detect if you put something out of $dst$ range. But it doesn't check $src$ size.
+ * @param fileName - File where allocation was made, usually results of macros !__FILE__!
+ * @param function - Function where allocation was made, usually results of macros !__FUNCTION__!
+ * @param line - Line where allocation was made, usually results of macros !__LINE__!
+ * @param dst - Destination of memory block
+ * @param src - Source of memory block
+ * @param len - Length of copied data
+ * @param dstStart - Start of destination pointer
+ * @param dstLen - Total size of memory block of destination pointer
+ */
 void ____memory_copy(char *fileName, char *function, size_t line, void *__restrict dst, const void *__restrict src, size_t len, void *__restrict dstStart, size_t dstLen);
 
-// Free pointer
+/**
+ * Function similar to ~free~ but it also removes information about allocation from global table.
+ * @param fileName - File where allocation was made, usually results of macros !__FILE__!
+ * @param function - Function where allocation was made, usually results of macros !__FUNCTION__!
+ * @param line - Line where allocation was made, usually results of macros !__LINE__!
+ * @param pointerName - Pointer or var name, need only for print
+ * @param pointer - Pointer you allocated
+ */
 void ____memory_free(char *fileName, char *function, size_t line, char *pointerName, void *pointer);
