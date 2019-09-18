@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "base64.h"
-#include "../memory/memory.h"
+#include "../../include/string/base64.h"
+#include "../../include/memory/memory.h"
 
 char *base64_encode(const uint8_t *src, size_t len) {
     int i = 0;

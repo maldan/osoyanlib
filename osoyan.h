@@ -46,17 +46,17 @@ default: print_default)(__FILE__, __LINE__, O, false)
 struct FileInfo*: print_file_info, \
 default: print_default)(__FILE__, __LINE__, O, true)
 
-#include "memory/memory.h"
-#include "string/string.h"
-#include "string/base64.h"
-#include "string/chars.h"
-#include "io/file.h"
-#include "io/logger.h"
-#include "io/console.h"
-#include "crypt/sha1.h"
-#include "debug/debug.h"
-#include "list/blob.h"
-#include "list/vector.h"
+#include "include/memory/memory.h"
+#include "include/string/string.h"
+#include "include/string/base64.h"
+#include "include/string/chars.h"
+#include "include/io/file.h"
+#include "include/debug/logger.h"
+#include "include/debug/console.h"
+#include "include/crypt/sha1.h"
+#include "include/debug/debug.h"
+#include "include/list/blob.h"
+#include "include/list/vector.h"
 
 /**
  * This is default printer for !PRINT! marcos. Just prints pointer of object. For example [0x7fffff00]

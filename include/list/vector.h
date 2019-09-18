@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "../osoyan.h"
+#include "../../osoyan.h"
 
 #define NEW_VECTOR(X, T) struct Vector *X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T)
 #define DESTROY_VECTOR(X) ____vector_free(X)

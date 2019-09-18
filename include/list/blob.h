@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "../osoyan.h"
+#include "../../osoyan.h"
 
 #define NEW_BLOB(X) struct Blob *X = MEMORY_ALLOCATE_STRUCT(Blob); ____blob_init(X)
 #define DESTROY_BLOB(X) ____blob_free(X)

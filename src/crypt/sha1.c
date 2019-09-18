@@ -1,5 +1,5 @@
-#include "sha1.h"
-#include "../memory/memory.h"
+#include "../../include/crypt/sha1.h"
+#include "../../include/memory/memory.h"
 
 typedef struct {
     uint32_t state[5];

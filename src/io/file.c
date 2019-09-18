@@ -1,4 +1,4 @@
-#include "file.h"
+#include "../../include/io/file.h"
 
 struct FileInfo * file_get_contents(const char *path) {
     FILE *file = fopen(path, "rb");

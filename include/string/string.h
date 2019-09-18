@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "../osoyan.h"
+#include "../../osoyan.h"
 
 #define NEW_STRING(X) struct String *X = MEMORY_ALLOCATE_STRUCT(String); ____string_init(X)
 #define DESTROY_STRING(X) ____string_free(X)

@@ -1,5 +1,5 @@
-#include "chars.h"
-#include "../io/logger.h"
+#include "../../include/string/chars.h"
+#include "../../include/debug/logger.h"
 
 int chars_to_int(const char *str) {
     return (int)chars_to_long(str);

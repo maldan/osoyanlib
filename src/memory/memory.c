@@ -1,4 +1,4 @@
-#include "memory.h"
+#include "../../include/memory/memory.h"
 #include <sys/types.h>
 
 size_t GLOBAL_MEMORY_TABLE_SIZE = 0;

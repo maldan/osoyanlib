@@ -1,4 +1,4 @@
-#include "string.h"
+#include "../../include/string/string.h"
 
 void ____string_init(struct String *string) {
     INIT_DEFAULT_LIST_SIZE(string, char);
