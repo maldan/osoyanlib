@@ -57,6 +57,8 @@ default: print_default)(__FILE__, __LINE__, O, true)
 #include "include/debug/debug.h"
 #include "include/list/blob.h"
 #include "include/list/vector.h"
+//#include "include/list/dict.h"
+#include "include/util/args.h"
 
 /**
  * This is default printer for !PRINT! marcos. Just prints pointer of object. For example [0x7fffff00]

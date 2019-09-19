@@ -1,4 +1,5 @@
-//
-// Created by black on 2019-09-19.
-//
+#include "../../include/util/args.h"
 
+void args_init(int amount, char **args) {
+
+}

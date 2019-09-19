@@ -9,7 +9,7 @@ void ____blob_free(struct Blob *blob) {
     MEMORY_FREE(blob);
 }
 
-void blob_put(struct Blob *blob, uint64_t value, size_t size, size_t position) {
+void blob_put(struct Blob *blob, uint64_t value, size_t size, long position) {
     RESIZE_ARRAY_IF_NEED(blob, size, uint8_t);
 
     // Copy value
@@ -18,7 +18,7 @@ void blob_put(struct Blob *blob, uint64_t value, size_t size, size_t position) {
         blob->position += size;
         blob->length += size;
     } else {
-        assert(position <= blob->allocated - size);
+        assert(position <= (long)(blob->allocated - size));
         MEMORY_COPY(blob->list + position, &value, size, blob->list, blob->allocated);
     }
 }

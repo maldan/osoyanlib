@@ -39,7 +39,7 @@ void ____blob_free(struct Blob *blob);
  * @param size - Size of value in bytes
  * @param position - Position in byte array
  */
-void blob_put(struct Blob *blob, uint64_t value, size_t size, size_t position);
+void blob_put(struct Blob *blob, uint64_t value, size_t size, long position);
 
 /**
  * Function works same as ~blob_put~ but the $size$ is 1 byte.
