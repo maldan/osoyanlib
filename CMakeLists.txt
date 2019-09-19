@@ -10,7 +10,7 @@ if (CMAKE_COMPILER_IS_GNUCC)
     endif()
 endif()
 
-set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} -DDEBUG)
+set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
 add_compile_options(-Wall -Wextra -Wpedantic)
 
 FILE(GLOB_RECURSE OsoyanSource src/*.c)
