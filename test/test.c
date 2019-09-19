@@ -81,11 +81,22 @@ void test_frm3() {
 
 void test_frm4() {
     NEW_STRING(X);
+
+    // 1
     string_put(X, "00001111");
     struct String *Y = string_break(X, 1);
     assert(strcmp(Y->list, "0\n0\n0\n0\n1\n1\n1\n1") == 0);
-    DESTROY_STRING(X);
+    X->length = 0;
     DESTROY_STRING(Y);
+
+    // 2
+    string_put(X, "0000\n1111");
+    Y = string_break(X, 6);
+    assert(strcmp(Y->list, "0000\n1111") == 0);
+    X->length = 0;
+    DESTROY_STRING(Y);
+
+    DESTROY_STRING(X);
 
     memory_check();
 }
@@ -189,6 +200,19 @@ int main(int argc, char **argv) {
         test_strarr_1();
         test_strarr_2();
         test_strarr_3();
+    } else if (strcmp(argv[1], "other") == 0) {
+        NEW_VECTOR(X, int);
+        NEW_BLOB(Y);
+        DESTROY_VECTOR(X);
+        DESTROY_BLOB(Y);
+
+        EQU_BLOB(X1) = sha1_chars("ss");
+        DESTROY_BLOB(X1);
+
+        NEW_FILE_INFO(X2, "Makefile");
+        DESTROY_FILE_INFO(X2);
+
+        memory_check();
     } else {
         return 1;
     }
