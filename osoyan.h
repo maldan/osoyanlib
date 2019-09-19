@@ -40,6 +40,7 @@ struct StringArray*: print_string_array, \
 struct Vector*: print_vector, \
 struct FileInfo*: print_file_info, \
 struct Blob*: print_blob, \
+struct Dict*: print_dict, \
 default: print_default)(__FILE__, __LINE__, O, false)
 
 #define PRINT_TO_BUFFER(O) _Generic((O), \
@@ -57,7 +58,7 @@ default: print_default)(__FILE__, __LINE__, O, true)
 #include "include/debug/debug.h"
 #include "include/list/blob.h"
 #include "include/list/vector.h"
-//#include "include/list/dict.h"
+#include "include/list/dict.h"
 #include "include/util/args.h"
 
 /**

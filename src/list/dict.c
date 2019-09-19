@@ -28,7 +28,7 @@ void dict_add(struct Dict *dict, char *key, void *value) {
     if (index >= 0) {
         dict->list[index] = value;
     } else {
-        CLONE_CHARS(dict->keys[dict->length], key, tmp);
+        CLONE_CHARS(dict->keys[dict->length], key);
         dict->list[dict->length] = value;
         dict->length++;
     }
@@ -38,6 +38,28 @@ long dict_key_index(struct Dict *dict, char *key) {
     for (size_t i = 0; i < dict->length; ++i)
         if (strcmp(dict->keys[i], key) == 0) return i;
     return -1;
+}
+
+struct String * print_dict(char *fileName, size_t line, struct Dict *dict, bool writeToBuffer) {
+    NEW_STRING(X);
+
+    string_add(X, "Dict <%s> [%zu:%zu] {\n", dict->type, dict->length, dict->allocated);
+    if (strcasecmp(dict->type, "char *") == 0) {
+        for (size_t i = 0; i < dict->length; ++i) {
+            string_add(X, "    \"%s\" => \"%s\"", dict->keys[i], dict->list[i]);
+            if (i < dict->length - 1) string_add(X, ",\n");
+        }
+    } else {
+        for (size_t i = 0; i < dict->length; ++i) {
+            string_add(X, "    '%s' => [%p]", dict->keys[i], dict->list[i]);
+            if (i < dict->length - 1) string_add(X, ",\n");
+        }
+    }
+    string_add(X, "\n}\n");
+
+    LOGGER_LOG(fileName, line, X->list);
+    DESTROY_STRING(X);
+    return 0;
 }
 
 /*int dict_get(struct Dict *dict, char *key, void **out) {

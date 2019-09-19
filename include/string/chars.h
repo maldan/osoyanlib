@@ -4,9 +4,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define CLONE_CHARS(DST, SRC, V) char *V = MEMORY_ALLOCATE(strlen(SRC) + 1);\
+/*#define CLONE_CHARS(DST, SRC, V) char *V = MEMORY_ALLOCATE(strlen(SRC) + 1);\
 memcpy(V, SRC, strlen(SRC));\
-(DST) = V
+(DST) = V*/
+
+#define CLONE_CHARS(DST, SRC) (DST) = MEMORY_ALLOCATE(strlen(SRC) + 1);\
+memcpy((DST), SRC, strlen(SRC))
 
 /**
  * Convert first corrects chars to %int%

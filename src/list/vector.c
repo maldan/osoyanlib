@@ -28,7 +28,7 @@ void vector_remove_at(struct Vector *vector, size_t at, size_t amount) {
 struct String * print_vector(char *fileName, size_t line, struct Vector *vector, bool writeToBuffer) {
     NEW_STRING(X);
 
-    string_add(X, "Vector %s [%zu:%zu] {\n", vector->type, vector->length, vector->allocated);
+    string_add(X, "Vector <%s> [%zu:%zu] {\n", vector->type, vector->length, vector->allocated);
     for (size_t i = 0; i < vector->length; ++i) {
         if (strcasecmp(vector->type, "struct FileInfo") == 0) {
             struct String *str = print_file_info(fileName, line, vector->list[i], true);

@@ -14,7 +14,7 @@ set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} -DDEBUG)
 add_compile_options(-Wall -Wextra -Wpedantic)
 
 FILE(GLOB_RECURSE OsoyanSource src/*.c)
-add_library(osoyanlib STATIC ${OsoyanSource})
+add_library(osoyanlib STATIC osoyan.c ${OsoyanSource})
 target_link_libraries(osoyanlib --coverage)
 
 enable_testing()

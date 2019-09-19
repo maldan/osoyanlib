@@ -8,7 +8,7 @@ struct FileInfo * file_get_contents(const char *path) {
     }
 
     struct FileInfo *fileInfo = MEMORY_ALLOCATE_STRUCT(FileInfo);
-    CLONE_CHARS(fileInfo->path, path, gen);
+    CLONE_CHARS(fileInfo->path, path);
     fileInfo->fileName = basename((char *)path);
 
     // Get file length
@@ -77,7 +77,7 @@ void ____file_real_search(struct Vector *fileInfoList, const char *path, regex_t
                 }
 
                 // Clone path int fileInfo->path
-                CLONE_CHARS(fileInfo->path, newPath->list, gen);
+                CLONE_CHARS(fileInfo->path, newPath->list);
 
                 // Define file name and data
                 fileInfo->fileName = basename(fileInfo->path);
