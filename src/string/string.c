@@ -56,6 +56,12 @@ void string_add(struct String *string, char *format, ...) {
 // Break long lines
 struct String * string_break(struct String *string, size_t maxLength) {
     NEW_STRING(X);
+
+    if (maxLength <= 0) {
+        string_put(X, string->list);
+        return X;
+    }
+
     size_t counter = 0;
     for (size_t i = 0; i < string->length; ++i) {
         if (string->list[i] == '\n') {
@@ -63,7 +69,7 @@ struct String * string_break(struct String *string, size_t maxLength) {
             counter = 0;
             continue;
         }
-        if (counter++ > maxLength) {
+        if (counter++ >= maxLength) {
             string_put(X, "\n");
             counter = 0;
             i -= 1;
@@ -108,10 +114,8 @@ void string_array_push(struct StringArray *array, char *string) {
 }
 
 void string_array_clear(struct StringArray *array) {
-    for (size_t i = 0; i < array->length; ++i) {
+    for (size_t i = 0; i < array->length; ++i)
         ____string_free(array->list[i]);
-        // MEMORY_FREE(array->list[i]);
-    }
     array->length = 0;
 }
 
@@ -125,9 +129,9 @@ struct String *string_array_join(struct StringArray *array, char *glue) {
     return str;
 }
 
-void string_array_remove_at(struct StringArray *array, size_t at, size_t amount) {
+/*void string_array_remove_at(struct StringArray *array, size_t at, size_t amount) {
     ARRAY_REMOVE_AT(array, size_t);
-}
+}*/
 
 // Print string
 struct String *print_string(char *fileName, size_t line, struct String *string, bool writeToBuffer) {

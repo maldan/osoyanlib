@@ -5,19 +5,21 @@
 #include <libgen.h>
 
 void logger_log(const char *fileName, size_t line, const char *format, ...) {
-    // Time
+    // Get terminal size
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
+    // Get tile Time
     time_t rawtime;
     struct tm *timeinfo;
     time(&rawtime);
     timeinfo = localtime(&rawtime);
 
-    // char *fi = fileName;
-
+    // Get file name
     fileName = basename((char *)fileName);
 
-    //
+    // Create string for output
     NEW_STRING(string);
-
     va_list argPtr;
     va_start(argPtr, format);
 
@@ -32,16 +34,21 @@ void logger_log(const char *fileName, size_t line, const char *format, ...) {
     MEMORY_FREE(str);
     va_end(argPtr);
 
+    // Terminal is too small
+    if (w.ws_col < 64) {
+        printf("[INFO] %2.d:%2.d:%2.d\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+        printf("%s:%zu\n", fileName, line);
+        printf("%s\n", string->list);
+        printf("─────\n");
+        DESTROY_STRING(string);
+        return;
+    }
+
+    // Add padding
     char *leftPad = "                 ";
     printf(ANSI_COLOR_YELLOW);
     printf("[INFO] %2.d:%2.d:%2.d  ", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
     printf(ANSI_COLOR_RESET);
-
-    struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-
-    // printf ("lines %d\n", w.ws_row);
-    // printf ("columns %d\n", w.ws_col);
 
     size_t used = 17;
     size_t maxStringLength = w.ws_col - strlen(fileName) - 21 - 4;
@@ -85,6 +92,7 @@ void logger_log(const char *fileName, size_t line, const char *format, ...) {
     }
 
     int32_t size = (w.ws_col - strlen(leftPad)) * 3;
+    // printf("[%d]", size);
     char *s = MEMORY_ALLOCATE(size + 1);
 
     for (size_t j = 0; j < w.ws_col - strlen(leftPad) - 1; ++j) {
