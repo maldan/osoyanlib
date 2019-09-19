@@ -11,7 +11,7 @@
 #define DESTROY_VECTOR(X) ____vector_free(X)
 
 struct Vector {
-    DEFAULT_ARRAY_STRUCT(void**);
+    DEFAULT_ARRAY_STRUCT(void**)
     const char *type;
 };
 
