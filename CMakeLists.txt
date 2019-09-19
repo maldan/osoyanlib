@@ -10,15 +10,18 @@ if (CMAKE_COMPILER_IS_GNUCC)
     endif()
 endif()
 
+set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} -DDEBUG)
+add_compile_options(-Wall -Wextra -Wpedantic)
+
 FILE(GLOB_RECURSE OsoyanSource src/*.c)
 add_library(osoyanlib STATIC ${OsoyanSource})
 target_link_libraries(osoyanlib --coverage)
-
-# add_compile_options("--coverage")
-# link_libraries("--coverage")
 
 enable_testing()
 add_executable(tester test/test.c)
 target_link_libraries(tester --coverage)
 target_link_libraries(tester osoyanlib)
-add_test(Tester tester)
+
+add_test(StringTest1 tester string_basic)
+add_test(StringTest2 tester string_format)
+add_test(StringTest3 tester string_array)

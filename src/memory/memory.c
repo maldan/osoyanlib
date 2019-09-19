@@ -96,3 +96,7 @@ void ____memory_free(char *fileName, char *function, size_t line, char *pointerN
     printf("Trying to free pointer %s[%p] that not found -> %s() %s:%zu\n", pointerName, pointer, function, fileName, line);
     exit(1);
 }
+
+bool ____memory_is_free() {
+    return GLOBAL_MEMORY_TABLE_SIZE <= 0;
+}

@@ -21,7 +21,6 @@ struct MemoryBlock {
 #define GLOBAL_MEMORY_TABLE __UNIQSALT2281488OSOYANFOREVER_AND_SOSO__globalMemoryTable
 #define GLOBAL_MEMORY_STATUS __UNIQSALT2281488OSOYANFOREVER_AND_SOSO__globalMemoryStatus
 
-
 #ifdef DEBUG
 #define MEMORY_INIT ____memory_init()
 #define MEMORY_ALLOCATE_AT(FL, FN, L, A, TYPE) ____memory_allocate(FL, FN, L, #TYPE, A)
@@ -31,6 +30,7 @@ struct MemoryBlock {
 #define MEMORY_FREE(P) ____memory_free(__BASE_FILE__, (char *)__FUNCTION__, __LINE__, #P, P)
 #define MEMORY_PRINT_STATE ____memory_print_state()
 #define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) ____memory_copy(__BASE_FILE__, (char *)__FUNCTION__, __LINE__, DST, SRC, SIZE, DST_START, DST_SIZE)
+#define MEMORY_IS_FREE ____memory_is_free()
 #else
 #define MEMORY_INIT NULL
 #define MEMORY_ALLOCATE_AT(FL, FN, L, A) calloc(1, A)
@@ -40,6 +40,7 @@ struct MemoryBlock {
 #define MEMORY_FREE(P) free(P)
 #define MEMORY_PRINT_STATE NULL
 #define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) memcpy(DST, SRC, SIZE)
+#define MEMORY_IS_FREE true
 #endif
 
 /**
@@ -101,3 +102,9 @@ void ____memory_copy(char *fileName, char *function, size_t line, void *__restri
  * @param pointer - Pointer you allocated
  */
 void ____memory_free(char *fileName, char *function, size_t line, char *pointerName, void *pointer);
+
+/**
+ * Function used to check if memory table is empty or not.
+ * @return - Return !true! if allocation table is empty otherwise return !false!
+ */
+bool ____memory_is_free();
