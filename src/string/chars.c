@@ -107,7 +107,7 @@ struct StringArray * chars_split(char *string, const char *delimiter, size_t max
 char *chars_clone(char *src) {
     size_t len = strlen(src);
     char *clone = MEMORY_ALLOCATE(len + 1);
-    MEMORY_COPY(clone, src, len, clone, len + 1)
+    MEMORY_COPY(clone, src, len, clone, len + 1);
     return clone;
 }
 

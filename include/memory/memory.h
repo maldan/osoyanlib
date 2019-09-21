@@ -28,7 +28,7 @@ struct MemoryBlock {
 #define MEMORY_REALLOCATE(A, S) ____memory_reallocate(__BASE_FILE__, __LINE__, A, S)
 #define MEMORY_FREE(P) ____memory_free(__BASE_FILE__, __LINE__, #P, P)
 #define MEMORY_PRINT_STATE ____memory_print_state();
-#define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) ____memory_copy(__BASE_FILE__, __LINE__, DST, SRC, SIZE, DST_START, DST_SIZE);
+#define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) ____memory_copy(__BASE_FILE__, __LINE__, DST, SRC, SIZE, DST_START, DST_SIZE)
 #define MEMORY_IS_FREE ____memory_is_free()
 #else
 #define MEMORY_INIT NULL
@@ -37,7 +37,7 @@ struct MemoryBlock {
 #define MEMORY_ALLOCATE_STRUCT(A) calloc(1, sizeof(struct A))
 #define MEMORY_REALLOCATE(A, S) realloc(A, S)
 #define MEMORY_FREE(P) free(P)
-#define MEMORY_PRINT_STATE NULL
+#define MEMORY_PRINT_STATE NULL;
 #define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) memcpy(DST, SRC, SIZE)
 #define MEMORY_IS_FREE true
 #endif
