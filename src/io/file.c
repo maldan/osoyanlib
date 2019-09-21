@@ -48,6 +48,10 @@ bool file_put_contents(const char *path, void *buffer, size_t length) {
     return true;
 }
 
+bool file_put_blob(const char *path, struct Blob *blob) {
+    return file_put_contents(path, blob->list, blob->length);
+}
+
 void ____file_real_search(struct Vector *fileInfoList, const char *path, regex_t *filter, size_t flags) {
     DIR *d = opendir(path);
     struct dirent *dir;

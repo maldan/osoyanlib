@@ -31,7 +31,7 @@ long chars_to_long(const char *source);
  * @param pattern - Search pattern
  * @return Returns index of found $pattern$. Returns -1 if $pattern$ not found.
  */
-long chars_index_of(const char *where, const char *pattern);
+ssize_t chars_index_of(const char *where, const char *pattern);
 
 /**
  * Get substring of string. Function trim slice end if $length$ is out of range.
@@ -40,7 +40,7 @@ long chars_index_of(const char *where, const char *pattern);
  * @param length - Length of slice
  * @return Returns slice of chars with specified $length$ starting from $startIndex$. Returns "" if slice is incorrect.
  */
-char *chars_substr(const char *where, long startIndex, long length);
+char *chars_substr(const char *where, ssize_t startIndex, ssize_t length);
 
 /**
  * Split chars array $string$ into pieces by $delimiter$. The result will be stored into new %struct StringArray%.
@@ -52,6 +52,8 @@ char *chars_substr(const char *where, long startIndex, long length);
  * @return Return %struct StringArray% that contains all splits strings
  */
 struct StringArray * chars_split(char *string, const char *delimiter, size_t maxAmount);
+
+char *chars_clone(char *src);
 
 /**
  * Just print chars

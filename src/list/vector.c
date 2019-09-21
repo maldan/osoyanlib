@@ -15,12 +15,13 @@ void vector_push(struct Vector *vector, void *value) {
     vector->list[vector->length++] = value;
 }
 
-void *vector_get(struct Vector *vector, size_t position) {
-    if (position >= vector->length) return 0;
+void *vector_get(struct Vector *vector, ssize_t position) {
+    if (position < 0) return 0;
+    if ((size_t)position >= vector->length) return 0;
     return vector->list[position];
 }
 
-void vector_remove_at(struct Vector *vector, size_t at, size_t amount) {
+void vector_remove_at(struct Vector *vector, ssize_t at, size_t amount) {
     ARRAY_REMOVE_AT(vector, size_t);
 }
 

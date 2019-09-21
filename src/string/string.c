@@ -129,9 +129,9 @@ struct String *string_array_join(struct StringArray *array, char *glue) {
     return str;
 }
 
-/*void string_array_remove_at(struct StringArray *array, size_t at, size_t amount) {
+void string_array_remove_at(struct StringArray *array, ssize_t at, size_t amount) {
     ARRAY_REMOVE_AT(array, size_t);
-}*/
+}
 
 // Print string
 struct String *print_string(char *fileName, size_t line, struct String *string, bool writeToBuffer) {

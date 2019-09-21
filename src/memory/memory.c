@@ -16,9 +16,8 @@ void ____memory_print_state() {
     size_t size = 0;
     for (size_t i = 0; i < GLOBAL_MEMORY_TABLE_SIZE; ++i) {
         size += GLOBAL_MEMORY_TABLE[i]->size;
-        printf("ALLOC[%zu, %p] -> %s() %s:%zu\n", GLOBAL_MEMORY_TABLE[i]->size,
+        printf("ALLOC[%zu, %p] -> %s:%zu\n", GLOBAL_MEMORY_TABLE[i]->size,
                GLOBAL_MEMORY_TABLE[i]->pointer,
-               GLOBAL_MEMORY_TABLE[i]->function,
                GLOBAL_MEMORY_TABLE[i]->fileName,
                GLOBAL_MEMORY_TABLE[i]->line);
     }
@@ -27,17 +26,16 @@ void ____memory_print_state() {
 }
 
 // Allocate amount and return pointer
-void *____memory_allocate(char *fileName, char *function, size_t line, size_t size) {
+void *____memory_allocate(char *fileName, size_t line, size_t size) {
     void *pointer = calloc(1, size);
     if (!pointer) {
-        printf("Can't ALLOC[%zu] -> %s() %s:%zu\n", size, function, fileName, line);
+        printf("Can't ALLOC[%zu] -> %s:%zu\n", size, fileName, line);
         exit(1);
     }
 
     GLOBAL_MEMORY_TABLE[GLOBAL_MEMORY_TABLE_SIZE] = calloc(1, sizeof(struct MemoryBlock));
     GLOBAL_MEMORY_TABLE[GLOBAL_MEMORY_TABLE_SIZE]->pointer = pointer;
     GLOBAL_MEMORY_TABLE[GLOBAL_MEMORY_TABLE_SIZE]->fileName = fileName;
-    GLOBAL_MEMORY_TABLE[GLOBAL_MEMORY_TABLE_SIZE]->function = function;
     GLOBAL_MEMORY_TABLE[GLOBAL_MEMORY_TABLE_SIZE]->line = line;
     GLOBAL_MEMORY_TABLE[GLOBAL_MEMORY_TABLE_SIZE]->size = size;
 
@@ -50,7 +48,7 @@ void *____memory_allocate(char *fileName, char *function, size_t line, size_t si
     return pointer;
 }
 
-void *____memory_reallocate(char *fileName, char *function, size_t line, void *pointer, size_t size) {
+void *____memory_reallocate(char *fileName, size_t line, void *pointer, size_t size) {
     struct MemoryBlock *block = 0;
     for (size_t i = 0; i < GLOBAL_MEMORY_TABLE_SIZE; ++i) {
         if (GLOBAL_MEMORY_TABLE[i]->pointer == pointer) {
@@ -60,7 +58,7 @@ void *____memory_reallocate(char *fileName, char *function, size_t line, void *p
     }
 
     if (!block) {
-        fprintf( stderr,"Can't found %p pointer to reallocation -> %s() %s:%zu\n", pointer, function, fileName, line);
+        fprintf( stderr,"Can't found %p pointer to reallocation -> %s:%zu\n", pointer, fileName, line);
         exit(1);
     }
 
@@ -74,17 +72,17 @@ void *____memory_reallocate(char *fileName, char *function, size_t line, void *p
     return ptr;
 }
 
-void ____memory_copy(char *fileName, char *function, size_t line, void *__restrict dst, const void *__restrict src, size_t len, void *__restrict dstStart, size_t dstLen) {
+void ____memory_copy(char *fileName, size_t line, void *__restrict dst, const void *__restrict src, size_t len, void *__restrict dstStart, size_t dstLen) {
     size_t borderEnd = (size_t) (dstStart + dstLen);
     if ((size_t)(dst + len) > borderEnd) {
-        printf("Out of border at %zu bytes in -> %s() %s:%zu\n", ((size_t)(dst + len) - borderEnd), function, fileName, line);
+        printf("Out of border at %zu bytes in -> %s:%zu\n", ((size_t)(dst + len) - borderEnd), fileName, line);
         exit(1);
     }
     memcpy(dst, src, len);
 }
 
 // Free pointer
-void ____memory_free(char *fileName, char *function, size_t line, char *pointerName, void *pointer) {
+void ____memory_free(char *fileName, size_t line, char *pointerName, void *pointer) {
     for (size_t i = 0; i < GLOBAL_MEMORY_TABLE_SIZE; ++i) {
         if (GLOBAL_MEMORY_TABLE[i]->pointer == pointer) {
             size_t len = GLOBAL_MEMORY_TABLE_SIZE - (i + 1);
@@ -93,7 +91,7 @@ void ____memory_free(char *fileName, char *function, size_t line, char *pointerN
             return;
         }
     }
-    printf("Trying to free pointer %s[%p] that not found -> %s() %s:%zu\n", pointerName, pointer, function, fileName, line);
+    printf("Trying to free pointer %s[%p] that not found -> %s:%zu\n", pointerName, pointer, fileName, line);
     exit(1);
 }
 

@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <regex.h>
 #include "../string/string.h"
+#include "../list/blob.h"
 
 #define FILE_INFO_INCLUDE_DATA 1
 
@@ -41,6 +42,8 @@ struct FileInfo *file_get_contents(const char *path);
  * @return Return !true! if success otherwise returns !false!.
  */
 bool file_put_contents(const char *path, void *buffer, size_t length);
+
+bool file_put_blob(const char *path, struct Blob *blob);
 
 /**
  * Recursively search files with regex $filter$ at specified $path$.

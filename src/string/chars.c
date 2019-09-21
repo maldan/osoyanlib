@@ -5,7 +5,7 @@ int chars_to_int(const char *str) {
     return (int)chars_to_long(str);
 }
 
-long chars_to_long(const char *str) {
+ssize_t chars_to_long(const char *str) {
     char num[48];
 
     // Copy valid part of number
@@ -28,7 +28,7 @@ long chars_to_long(const char *str) {
     return atol(num);
 }
 
-char *chars_substr(const char *where, long from, long to) {
+char *chars_substr(const char *where, ssize_t from, ssize_t to) {
     size_t len = to - from;
     char *sas = MEMORY_ALLOCATE(len + 1);
     MEMORY_COPY(sas, where + from, len, sas, len);
@@ -104,7 +104,14 @@ struct StringArray * chars_split(char *string, const char *delimiter, size_t max
     return out;
 }
 
+char *chars_clone(char *src) {
+    size_t len = strlen(src);
+    char *clone = MEMORY_ALLOCATE(len + 1);
+    MEMORY_COPY(clone, src, len, clone, len + 1)
+    return clone;
+}
+
 struct String *print_chars(const char *fileName, size_t line, void *data, bool writeToBuffer) {
-    LOGGER_LOG(fileName, line, "%s", data);
+    LOGGER_LOG(fileName, line, "%s", data)
     return 0;
 }

@@ -41,7 +41,9 @@ void vector_push(struct Vector *vector, void *value);
  * @param position - Position in vector
  * @return
  */
-void *vector_get(struct Vector *vector, size_t position);
+void *vector_get(struct Vector *vector, ssize_t position);
+
+void vector_remove_at(struct Vector *vector, ssize_t at, size_t amount);
 
 /**
  * Print elements of $vector$. Printing values depends on type of $vector$. Usually it prints only pointers to elements.

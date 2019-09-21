@@ -13,6 +13,13 @@
 #include <stdarg.h>
 #include <libgen.h>
 #include <dirent.h>
+#include <wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <fcntl.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <errno.h>
 
 #define DEFAULT_ARRAY_STRUCT(TYPE) TYPE list;\
 size_t length;\
@@ -27,7 +34,7 @@ size_t _minToAdd34cdf33435_Sdfsd4x = (A->length + S) - A->allocated; \
 A->list = MEMORY_REALLOCATE(A->list, _minToAdd34cdf33435_Sdfsd4x + A->allocated * 2 * sizeof(EL_SIZE));\
 A->allocated *= 2;\
 A->allocated += _minToAdd34cdf33435_Sdfsd4x;\
-} 1
+}
 
 #define INIT_DEFAULT_LIST_SIZE(A, TYPE) A->list = MEMORY_ALLOCATE(sizeof(TYPE) * 4);\
 A->length = 0;\
@@ -41,7 +48,7 @@ struct Vector*: print_vector, \
 struct FileInfo*: print_file_info, \
 struct Blob*: print_blob, \
 struct Dict*: print_dict, \
-default: print_default)(__FILE__, __LINE__, O, false)
+default: print_default)(__FILE__, __LINE__, O, false);
 
 #define PRINT_TO_BUFFER(O) _Generic((O), \
 struct FileInfo*: print_file_info, \
@@ -60,6 +67,8 @@ default: print_default)(__FILE__, __LINE__, O, true)
 #include "include/list/vector.h"
 #include "include/list/dict.h"
 #include "include/util/args.h"
+#include "include/net/http.h"
+#include "include/net/websocket.h"
 
 /**
  * This is default printer for !PRINT! marcos. Just prints pointer of object. For example [0x7fffff00]

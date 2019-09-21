@@ -2,9 +2,9 @@
 
 #include "../../osoyan.h"
 
-#define NEW_DICT(X, T) struct Dict *X = MEMORY_ALLOCATE_STRUCT(Dict); ____dict_init(X, #T)
+#define NEW_DICT(X, T) struct Dict *X = MEMORY_ALLOCATE_STRUCT(Dict); ____dict_init(X, #T);
 #define EQU_DICT(X) struct Dict *X
-#define DESTROY_DICT(X) ____dict_free(X)
+#define DESTROY_DICT(X) ____dict_free(X);
 
 struct Dict {
     DEFAULT_ARRAY_STRUCT(void **)

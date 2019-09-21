@@ -10,11 +10,13 @@
 
 #include "../../osoyan.h"
 
-#define NEW_STRING(X) struct String *X = MEMORY_ALLOCATE_STRUCT(String); ____string_init(X)
-#define DESTROY_STRING(X) ____string_free(X)
+#define EQU_STR(X) struct String *X
+#define NEW_STRING(X) struct String *X = MEMORY_ALLOCATE_STRUCT(String); ____string_init(X);
+#define DESTROY_STRING(X) ____string_free(X);
 
-#define NEW_STRING_ARRAY(X) struct StringArray *X = MEMORY_ALLOCATE_STRUCT(StringArray); ____string_array_init(X)
-#define DESTROY_STRING_ARRAY(X) ____string_array_free(X)
+#define EQU_STRARR(X) struct StringArray *X
+#define NEW_STRING_ARRAY(X) struct StringArray *X = MEMORY_ALLOCATE_STRUCT(StringArray); ____string_array_init(X);
+#define DESTROY_STRING_ARRAY(X) ____string_array_free(X);
 
 struct String {
     DEFAULT_ARRAY_STRUCT(char *)
@@ -113,6 +115,8 @@ void string_array_push(struct StringArray *array, char *string);
  * @return Returns %struct String% that contains concatenated strings
  */
 struct String *string_array_join(struct StringArray *array, char *glue);
+
+void string_array_remove_at(struct StringArray *array, ssize_t at, size_t amount);
 
 /**
  * Dispose each string and change length to 0.
