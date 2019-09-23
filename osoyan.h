@@ -36,6 +36,8 @@ A->allocated *= 2;\
 A->allocated += _minToAdd34cdf33435_Sdfsd4x;\
 }
 
+#define ARRAY_SIZE(a) sizeof(a) / sizeof(a[0])
+
 #define INIT_DEFAULT_LIST_SIZE(A, TYPE) A->list = MEMORY_ALLOCATE(sizeof(TYPE) * 4);\
 A->length = 0;\
 A->allocated = 4
@@ -67,6 +69,7 @@ default: print_default)(__FILE__, __LINE__, O, true)
 #include "include/list/vector.h"
 #include "include/list/dict.h"
 #include "include/util/args.h"
+#include "include/util/color.h"
 #include "include/net/http.h"
 #include "include/net/websocket.h"
 

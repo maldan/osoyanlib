@@ -11,6 +11,8 @@ memcpy(V, SRC, strlen(SRC));\
 #define CLONE_CHARS(DST, SRC) (DST) = MEMORY_ALLOCATE(strlen(SRC) + 1);\
 memcpy((DST), SRC, strlen(SRC))
 
+#define HEX_TO_INT(X) (int)strtol(X, NULL, 16);
+
 /**
  * Convert first corrects chars to %int%
  * @param source - Source chars array
@@ -34,6 +36,8 @@ long chars_to_long(const char *source);
 ssize_t chars_index_of(const char *where, const char *pattern);
 
 char *chars_substr(const char *where, ssize_t startIndex, ssize_t toIndex);
+
+size_t chars_word_length(const char *word);
 
 /**
  * Split chars array $string$ into pieces by $delimiter$. The result will be stored into new %struct StringArray%.

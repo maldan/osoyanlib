@@ -104,6 +104,19 @@ struct StringArray * chars_split(char *string, const char *delimiter, size_t max
     return out;
 }
 
+size_t chars_word_length(const char *word) {
+    size_t amount = 0;
+    size_t pos = 0;
+
+    while (true) {
+        if (word[pos] == ' ') break;
+        if (word[pos] == '\0') break;
+        pos++;
+        amount++;
+    }
+    return amount;
+}
+
 char *chars_clone(char *src) {
     size_t len = strlen(src);
     char *clone = MEMORY_ALLOCATE(len + 1);

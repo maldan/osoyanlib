@@ -9,6 +9,13 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 #define ANSI_CLEAR         "\x1b[2J"
 
+#define ANSI_BACKGROUND_RED     "\x1b[41m"
+#define ANSI_BACKGROUND_GREEN     "\x1b[42m"
+#define ANSI_BACKGROUND_YELLOW     "\x1b[43m"
+#define ANSI_BACKGROUND_BLUE     "\x1b[44m"
+
+#define ANSI_BOLD "\x1b[1m"
+
 #include <asm/ioctls.h>
 #include <sys/ioctl.h>
 #include <zconf.h>

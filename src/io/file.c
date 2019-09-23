@@ -44,7 +44,7 @@ struct Blob * file_get_contents(const char *path) {
 
     // Get file data
     NEW_BLOB(fileData)
-    blob_allocate(fileData, fileLength);
+    blob_allocate(fileData, fileLength + 1);
     fread(fileData->list, 1, fileLength, file);
     fileData->position = fileLength;
 
