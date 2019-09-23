@@ -55,6 +55,8 @@ void ____memory_init();
  */
 void ____memory_print_state();
 
+char * ____memory_get_state();
+
 /**
  * Function similar to ~calloc~. It's just add information of allocation to the global table.
  * @param fileName - File where allocation was made, usually results of macros !__FILE__!

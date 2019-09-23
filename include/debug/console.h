@@ -7,7 +7,9 @@
 #define ANSI_COLOR_MAGENTA "\x1b[95m"
 #define ANSI_COLOR_CYAN    "\x1b[96m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
-#define ANSI_CLEAR         "\x1b[2J"
+#define ANSI_CLEAR         "\x1b[3J\x1b[H\x1b[2J"
+#define ANSI_HIDE_CURSOR         "\x1b[?25l"
+#define ANSI_SHOW_CURSOR         "\x1b[?25h"
 
 #define ANSI_BACKGROUND_RED     "\x1b[41m"
 #define ANSI_BACKGROUND_GREEN     "\x1b[42m"

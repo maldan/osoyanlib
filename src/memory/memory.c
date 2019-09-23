@@ -25,6 +25,17 @@ void ____memory_print_state() {
     printf("CURRENT ALLOCATION: %zu pointers, [%zu] bytes\n", GLOBAL_MEMORY_TABLE_SIZE, size);
 }
 
+char * ____memory_get_state() {
+    char *out = calloc(1, 2048);
+    size_t size = 0;
+    for (size_t i = 0; i < GLOBAL_MEMORY_TABLE_SIZE; ++i) {
+        size += GLOBAL_MEMORY_TABLE[i]->size;
+    }
+    sprintf(out + strlen(out), "TOTAL: %zu ptrs, [%zu] b ", GLOBAL_MEMORY_STATUS->allocationTotalAmount, GLOBAL_MEMORY_STATUS->allocationTotalSize);
+    sprintf(out + strlen(out), "CURRENT: %zu ptrs, [%zu] b", GLOBAL_MEMORY_TABLE_SIZE, size);
+    return out;
+}
+
 // Allocate amount and return pointer
 void *____memory_allocate(char *fileName, size_t line, size_t size) {
     void *pointer = calloc(1, size);
