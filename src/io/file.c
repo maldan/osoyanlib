@@ -1,6 +1,6 @@
 #include "../../include/io/file.h"
 
-struct FileInfo * file_get_contents(const char *path) {
+struct FileInfo *file_get_info(const char *path, bool includeContent) {
     FILE *file = fopen(path, "rb");
     if (!file) {
         fprintf(stderr, "File \"%s\" not found\n", path);
@@ -17,14 +17,41 @@ struct FileInfo * file_get_contents(const char *path) {
     fseek(file, 0, SEEK_SET);
 
     // Create buffer
-    fileInfo->data = MEMORY_ALLOCATE(fileInfo->size + 1);
-    memset(fileInfo->data, 0, fileInfo->size + 1);
-    fread(fileInfo->data, 1, fileInfo->size, file);
+    if (includeContent) {
+        fileInfo->data = MEMORY_ALLOCATE(fileInfo->size + 1);
+        memset(fileInfo->data, 0, fileInfo->size + 1);
+        fread(fileInfo->data, 1, fileInfo->size, file);
+    }
 
     // Close file
     fclose(file);
 
     return fileInfo;
+}
+
+struct Blob * file_get_contents(const char *path) {
+    FILE *file = fopen(path, "rb");
+    if (!file) {
+        fprintf(stderr, "File \"%s\" not found\n", path);
+        return 0;
+    }
+
+    // Get file size
+    size_t fileLength = 0;
+    fseek(file, 0, SEEK_END);
+    fileLength = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    // Get file data
+    NEW_BLOB(fileData)
+    blob_allocate(fileData, fileLength);
+    fread(fileData->list, 1, fileLength, file);
+    fileData->position = fileLength;
+
+    // Close file
+    fclose(file);
+
+    return fileData;
 }
 
 bool file_put_contents(const char *path, void *buffer, size_t length) {

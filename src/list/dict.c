@@ -34,13 +34,25 @@ void dict_add(struct Dict *dict, char *key, void *value) {
     }
 }
 
-long dict_key_index(struct Dict *dict, char *key) {
+ssize_t dict_key_index(struct Dict *dict, char *key) {
     for (size_t i = 0; i < dict->length; ++i)
         if (strcmp(dict->keys[i], key) == 0) return i;
     return -1;
 }
 
-struct String * print_dict(char *fileName, size_t line, struct Dict *dict, bool writeToBuffer) {
+bool dict_has_key(struct Dict *dict, char *key) {
+    for (size_t i = 0; i < dict->length; ++i)
+        if (strcmp(dict->keys[i], key) == 0) return true;
+    return false;
+}
+
+void *dict_get(struct Dict *dict, char *key) {
+    for (size_t i = 0; i < dict->length; ++i)
+        if (strcmp(dict->keys[i], key) == 0) return dict->list[i];
+    return 0;
+}
+
+struct String *print_dict(char *fileName, size_t line, struct Dict *dict, bool writeToBuffer) {
     NEW_STRING(X);
 
     string_add(X, "Dict <%s> [%zu:%zu] {\n", dict->type, dict->length, dict->allocated);

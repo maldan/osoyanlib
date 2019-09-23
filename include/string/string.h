@@ -10,11 +10,12 @@
 
 #include "../../osoyan.h"
 
-#define EQU_STR(X) struct String *X
+#define EQU_STRING(X) struct String *X
+#define INIT_STRING(X, V) (X) = MEMORY_ALLOCATE_STRUCT(String); ____string_init(X); string_put(X, V);
 #define NEW_STRING(X) struct String *X = MEMORY_ALLOCATE_STRUCT(String); ____string_init(X);
 #define DESTROY_STRING(X) ____string_free(X);
 
-#define EQU_STRARR(X) struct StringArray *X
+#define EQU_STRING_ARRAY(X) struct StringArray *X
 #define NEW_STRING_ARRAY(X) struct StringArray *X = MEMORY_ALLOCATE_STRUCT(StringArray); ____string_array_init(X);
 #define DESTROY_STRING_ARRAY(X) ____string_array_free(X);
 
@@ -89,6 +90,8 @@ struct String *string_break(struct String *string, size_t maxLength);
  * @return Return formatted result as new %struct String%.
  */
 struct String *string_indent(struct String *string, size_t indent);
+
+void string_clear(struct String *string);
 
 /**
  * Almost same as print_chars but also prints some info about $string$ because $string$ is %struct String% not %char%.

@@ -104,6 +104,11 @@ struct String * string_indent(struct String *string, size_t indent) {
     return X;
 }
 
+void string_clear(struct String *string) {
+    string->list[0] = 0;
+    string->length = 0;
+}
+
 // Add string to string array
 void string_array_push(struct StringArray *array, char *string) {
     RESIZE_ARRAY_IF_NEED(array, 1, size_t);

@@ -28,10 +28,10 @@ ssize_t chars_to_long(const char *str) {
     return atol(num);
 }
 
-char *chars_substr(const char *where, ssize_t from, ssize_t to) {
-    size_t len = to - from;
+char *chars_substr(const char *where, ssize_t startIndex, ssize_t toIndex) {
+    size_t len = toIndex - startIndex;
     char *sas = MEMORY_ALLOCATE(len + 1);
-    MEMORY_COPY(sas, where + from, len, sas, len);
+    MEMORY_COPY(sas, where + startIndex, len, sas, len);
     return sas;
 }
 

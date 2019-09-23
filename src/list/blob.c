@@ -9,6 +9,11 @@ void ____blob_free(struct Blob *blob) {
     MEMORY_FREE(blob);
 }
 
+void blob_allocate(struct Blob *blob, size_t amount) {
+    blob->list = MEMORY_REALLOCATE(blob->list,  blob->allocated + amount * sizeof(uint8_t));
+    blob->allocated = blob->allocated + amount * sizeof(uint8_t);
+}
+
 void blob_put(struct Blob *blob, uint64_t value, size_t size, ssize_t position) {
     RESIZE_ARRAY_IF_NEED(blob, size, uint8_t)
 

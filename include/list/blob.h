@@ -30,6 +30,8 @@ void ____blob_init(struct Blob *blob);
  */
 void ____blob_free(struct Blob *blob);
 
+void blob_allocate(struct Blob *blob, size_t amount);
+
 /**
  * Add $value$ to specified $position$ in byte array $blob$ with specified $size$ of element.
  * For example if size is 1 then function add 1 byte to $blob$. If size is 4 it add %int%.

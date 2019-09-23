@@ -10,7 +10,7 @@
 
 #define FILE_INFO_INCLUDE_DATA 1
 
-#define NEW_FILE_INFO(X, PATH) struct FileInfo *X = file_get_contents(PATH)
+#define NEW_FILE_INFO(X, PATH) struct FileInfo *X = file_get_info(PATH, false);
 #define DESTROY_FILE_INFO(X) MEMORY_FREE((X)->data); MEMORY_FREE((X)->path); MEMORY_FREE(X)
 #define DESTROY_FILE_SEARCH_RESULT(X) for (size_t ii_53534536xcvsdf42g = 0; ii_53534536xcvsdf42g < sas->length; ++ii_53534536xcvsdf42g) {\
 DESTROY_FILE_INFO(((struct FileInfo *)sas->list[ii_53534536xcvsdf42g]));\
@@ -27,12 +27,9 @@ struct FileInfo {
     size_t size;
 };
 
-/**
- * Get content of file at specified $path$.
- * @param path - Path of source file
- * @return Returns %struct FileInfo% with info about file such as length, name, path and data. If file not found, function returns 0.
- */
-struct FileInfo *file_get_contents(const char *path);
+struct FileInfo *file_get_info(const char *path, bool includeContent);
+
+struct Blob *file_get_contents(const char *path);
 
 /**
  * Put $buffer$ into a file at specified $path$. It will overwrite the previous file. File will be created if it doesnt't exist.

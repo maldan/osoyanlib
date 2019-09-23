@@ -54,10 +54,10 @@ void http_client_handler(int httpSocketId, void (listener)(int, struct Dict *)) 
             NEW_DICT(headers, char *)
 
             // Split line
-            EQU_STRARR(headersTuple) = chars_split(buffer, "\r\n", 0);
+            EQU_STRING_ARRAY(headersTuple) = chars_split(buffer, "\r\n", 0);
             for (size_t i = 0; i < headersTuple->length; ++i) {
                 // Split header
-                EQU_STRARR(lineTuple) = chars_split(headersTuple->list[i]->list, ": ", 1);
+                EQU_STRING_ARRAY(lineTuple) = chars_split(headersTuple->list[i]->list, ": ", 1);
                 if (lineTuple->length > 1)
                     dict_add(headers, lineTuple->list[0]->list, chars_clone(lineTuple->list[1]->list));
                 DESTROY_STRING_ARRAY(lineTuple)
@@ -107,7 +107,7 @@ void http_response_string(int clientSocketId, struct Dict *headers, char *data) 
 }
 
 struct HttpQuery *http_query_get(char *url) {
-    EQU_STRARR(X) = chars_split(url, "/", 0);
+    EQU_STRING_ARRAY(X) = chars_split(url, "/", 0);
     char *hostname = X->list[2]->list;
     int port = 80;
 
@@ -132,7 +132,7 @@ struct HttpQuery *http_query_get(char *url) {
 
     // Required path
     string_array_remove_at(X, 0, 3);
-    EQU_STR(path) = string_array_join(X, "/");
+    EQU_STRING(path) = string_array_join(X, "/");
 
     // Request string
     NEW_STRING(X1)

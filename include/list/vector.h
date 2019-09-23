@@ -8,6 +8,8 @@
 #include "../../osoyan.h"
 
 #define NEW_VECTOR(X, T) struct Vector *X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T)
+#define INIT_VECTOR(X, T) X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T);
+#define EQU_VECTOR(X) struct Vector *X
 #define DESTROY_VECTOR(X) ____vector_free(X)
 
 struct Vector {
