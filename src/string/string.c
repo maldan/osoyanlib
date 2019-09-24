@@ -20,7 +20,7 @@ void ____string_array_free(struct StringArray *array) {
 
 // Just concatenate string with chars
 void string_put_char(struct String *string, const char str) {
-    RESIZE_ARRAY_IF_NEED(string, 1, char);
+    RESIZE_ARRAY_IF_NEED(string, 2, char)
     string->length += 1;
     string->list[string->length - 1] = str;
     string->list[string->length] = 0;
@@ -29,7 +29,7 @@ void string_put_char(struct String *string, const char str) {
 // Just concatenate string with chars
 void string_put(struct String *string, const char *str) {
     size_t len = strlen(str);
-    RESIZE_ARRAY_IF_NEED(string, len + 1, char);
+    RESIZE_ARRAY_IF_NEED(string, len + 1, char)
     MEMORY_COPY(string->list + string->length, str, len, string->list, string->allocated);
     string->length += len;
     string->list[string->length] = 0;

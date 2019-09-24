@@ -109,8 +109,9 @@ size_t chars_word_length(const char *word) {
     size_t pos = 0;
 
     while (true) {
-        if (word[pos] == ' ') break;
-        if (word[pos] == '\0') break;
+        if (word[pos] == ' '
+        || word[pos] == '\0' || word[pos] == '\n'
+        || word[pos] == '\r') break;
         pos++;
         amount++;
     }

@@ -51,7 +51,7 @@ void http_client_handler(int httpSocketId, void (listener)(int, struct Dict *)) 
             puts(buffer);
 
             // Headers dict
-            NEW_DICT(headers, char *)
+            NEW_DICT(headers)
 
             // Split line
             EQU_STRING_ARRAY(headersTuple) = chars_split(buffer, "\r\n", 0);

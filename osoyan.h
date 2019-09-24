@@ -68,6 +68,7 @@ default: print_default)(__FILE__, __LINE__, O, true)
 #include "include/list/blob.h"
 #include "include/list/vector.h"
 #include "include/list/dict.h"
+#include "include/list/map.h"
 #include "include/util/args.h"
 #include "include/util/color.h"
 #include "include/net/http.h"

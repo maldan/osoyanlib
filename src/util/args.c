@@ -4,7 +4,7 @@
 struct ArgList *args_init(int amount, char **args) {
     struct ArgList *X = MEMORY_ALLOCATE_STRUCT(ArgList);
 
-    NEW_DICT(Y, char *);
+    NEW_DICT(Y);
     X->keys = Y;
 
     NEW_STRING(Y1);
