@@ -5,8 +5,15 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <regex.h>
+#include <dirent.h>
+#include <libgen.h>
+
+#include "../memory/memory.h"
 #include "../string/string.h"
+#include "../string/chars.h"
 #include "../list/blob.h"
+#include "../list/vector.h"
+#include "../debug/logger.h"
 
 #define FILE_INFO_INCLUDE_DATA 1
 
@@ -51,12 +58,3 @@ bool file_put_blob(const char *path, struct Blob *blob);
  */
 struct Vector *file_search(const char *path, const char *filter, size_t flags);
 
-/**
- * Print info from $file$ struct about file such as size, name and path.
- * @param fileName - Current file name. It's not file which we want to print, it's usually result of macros !__FILE__!
- * @param line - Current line, usually result of macros !__LINE__!
- * @param file - Struct with file info
- * @param writeToBuffer - Write to buffer or to screen
- * @return Returns %struct String *% if $writeToBuffer$ is !true!
- */
-struct String *print_file_info(const char *fileName, size_t line, struct FileInfo *file, bool writeToBuffer);

@@ -1,6 +1,10 @@
 #pragma once
 
-#include "../../osoyan.h"
+#include <stdlib.h>
+#include <stdbool.h>
+#include "../../include/list/list.h"
+#include "../../include/memory/memory.h"
+#include "../../include/string/string.h"
 
 #define NEW_DICT(X) struct Dict *X = MEMORY_ALLOCATE_STRUCT(Dict); ____dict_init(X);
 #define INIT_DICT(X) X = MEMORY_ALLOCATE_STRUCT(Dict); ____dict_init(X);
@@ -28,4 +32,4 @@ ssize_t dict_key_index(struct Dict *dict, char *key);
 
 bool dict_has_key(struct Dict *dict, char *key);
 
-struct String *print_dict(char *fileName, size_t line, struct Dict *dict, bool writeToBuffer);
+

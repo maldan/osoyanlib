@@ -62,18 +62,3 @@ char *dict_get(struct Dict *dict, char *key) {
 int dict_get_int(struct Dict *dict, char *key) {
     return chars_to_int(dict_get(dict, key));
 }
-
-struct String *print_dict(char *fileName, size_t line, struct Dict *dict, bool writeToBuffer) {
-    NEW_STRING(X);
-
-    string_add(X, "Dict [%zu:%zu] {\n", dict->length, dict->allocated);
-    for (size_t i = 0; i < dict->length; ++i) {
-        string_add(X, "    \"%s\" => \"%s\"", dict->keys[i], dict->list[i]);
-        if (i < dict->length - 1) string_add(X, ",\n");
-    }
-    string_add(X, "\n}\n");
-
-    LOGGER_LOG(fileName, line, X->list);
-    DESTROY_STRING(X);
-    return 0;
-}

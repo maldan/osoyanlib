@@ -2,6 +2,8 @@
 
 #include <stddef.h>
 #include <stdbool.h>
+#include "../memory/memory.h"
+#include "../list/dict.h"
 
 #define EQU_ARGS(X) struct ArgList *X
 

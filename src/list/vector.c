@@ -25,37 +25,6 @@ void vector_remove_at(struct Vector *vector, ssize_t at, size_t amount) {
     ARRAY_REMOVE_AT(vector, size_t);
 }
 
-// Print string array
-struct String * print_vector(char *fileName, size_t line, struct Vector *vector, bool writeToBuffer) {
-    NEW_STRING(X);
-
-    string_add(X, "Vector <%s> [%zu:%zu] {\n", vector->type, vector->length, vector->allocated);
-    for (size_t i = 0; i < vector->length; ++i) {
-        if (strcasecmp(vector->type, "struct FileInfo") == 0) {
-            struct String *str = print_file_info(fileName, line, vector->list[i], true);
-            str->list[str->length - 1] = 0;
-            struct String *strWithIndent = string_indent(str, 4);
-            string_add(X, "%s", strWithIndent->list);
-            DESTROY_STRING(str);
-            DESTROY_STRING(strWithIndent);
-        } else
-        if (strcasecmp(vector->type, "struct String") == 0) {
-            string_add(X, "    (%zu)%s'%s'%s",
-                    ((struct String *) vector->list[i])->length, ANSI_COLOR_GREEN,
-                       ((struct String *) vector->list[i])->list, ANSI_COLOR_RESET);
-        } else if (strcasecmp(vector->type, "char") == 0) {
-            string_add(X, "    %s'%s'%s", ANSI_COLOR_GREEN, vector->list[i], ANSI_COLOR_RESET);
-        } else
-            string_add(X, "    %s[%p]%s", ANSI_COLOR_RED, vector->list[i], ANSI_COLOR_RESET);
-        if (i < vector->length - 1) string_add(X, ",\n");
-    }
-    string_add(X, "\n}\n");
-
-    LOGGER_LOG(fileName, line, X->list);
-    DESTROY_STRING(X);
-    return 0;
-}
-
 /*int vector_get(struct Vector *vector, uint64_t position, void **out) {
     if (position >= vector->size) return 0;
     *out = vector->list[position];

@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
-
-#include "../../osoyan.h"
+#include <stdbool.h>
+#include "list.h"
+#include "../memory/memory.h"
+#include "../string/string.h"
 
 #define NEW_BLOB(X) struct Blob *X = MEMORY_ALLOCATE_STRUCT(Blob); ____blob_init(X);
 #define EQU_BLOB(X) struct Blob *X
@@ -86,13 +88,3 @@ void blob_put_chars(struct Blob *blob, char *chars, ssize_t position);
 void blob_put_bytes(struct Blob *blob, uint8_t *bytes, ssize_t position, size_t size);
 
 void blob_concat(struct Blob *blob, struct Blob *src);
-
-/**
- * Prints byte array as hex string. For example FF FF 00 3F
- * @param fileName - Current file name, usually result of macros !__FILE__!
- * @param line - Current line, usually result of macros !__LINE__!
- * @param blob - Array of bytes
- * @param writeToBuffer - Write to buffer or to screen
- * @return Returns %struct String *% if $writeToBuffer$ is !true!
- */
-struct String * print_blob(char *fileName, size_t line, struct Blob *blob, bool writeToBuffer);

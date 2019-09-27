@@ -1,5 +1,4 @@
 #include "../../include/string/chars.h"
-#include "../../include/debug/logger.h"
 
 int chars_to_int(const char *str) {
     return (int)chars_to_long(str);
@@ -34,6 +33,8 @@ char *chars_substr(const char *where, ssize_t startIndex, ssize_t toIndex) {
     MEMORY_COPY(sas, where + startIndex, len, sas, len);
     return sas;
 }
+
+
 
 long chars_index_of(const char *where, const char *index) {
     size_t len = strlen(where);
@@ -118,14 +119,16 @@ size_t chars_word_length(const char *word) {
     return amount;
 }
 
+size_t chars_utf8_length(const char *str) {
+    size_t count = 0;
+    while (*str)
+        count += ((uint8_t)(*str++) & 0xC0u) != 0x80;
+    return count;
+}
+
 char *chars_clone(char *src) {
     size_t len = strlen(src);
     char *clone = MEMORY_ALLOCATE(len + 1);
     MEMORY_COPY(clone, src, len, clone, len + 1);
     return clone;
-}
-
-struct String *print_chars(const char *fileName, size_t line, void *data, bool writeToBuffer) {
-    LOGGER_LOG(fileName, line, "%s", data)
-    return 0;
 }

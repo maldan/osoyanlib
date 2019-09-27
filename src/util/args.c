@@ -1,5 +1,4 @@
 #include "../../include/util/args.h"
-#include "../../include/memory/memory.h"
 
 struct ArgList *args_init(int amount, char **args) {
     struct ArgList *X = MEMORY_ALLOCATE_STRUCT(ArgList);

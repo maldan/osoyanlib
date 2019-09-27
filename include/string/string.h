@@ -8,7 +8,10 @@
 
 #pragma once
 
-#include "../../osoyan.h"
+#include <stdlib.h>
+#include <stdbool.h>
+#include "../list/list.h"
+#include "../memory/memory.h"
 
 #define EQU_STRING(X) struct String *X
 #define INIT_STRING(X, V) (X) = MEMORY_ALLOCATE_STRUCT(String); ____string_init(X); string_put(X, V);
@@ -94,16 +97,6 @@ struct String *string_indent(struct String *string, size_t indent);
 void string_clear(struct String *string);
 
 /**
- * Almost same as print_chars but also prints some info about $string$ because $string$ is %struct String% not %char%.
- * @param fileName - Current file name, usually result of macros !__FILE__!
- * @param line - Current line, usually result of macros !__LINE__!
- * @param string - %struct String%, not just %char%
- * @param writeToBuffer - Write to buffer or to screen
- * @return Returns %struct String *% if $writeToBuffer$ is !true!
- */
-struct String *print_string(char *fileName, size_t line, struct String *string, bool writeToBuffer);
-
-/**
  * Add $string$ into $array$. Note that function make copy of $string$ not just reference it.
  * @param array - Array of strings
  * @param string - Array of chars that will be copied and added to $array$
@@ -126,14 +119,3 @@ void string_array_remove_at(struct StringArray *array, ssize_t at, size_t amount
  * @param array - Array of strings
  */
 void string_array_clear(struct StringArray *array);
-
-/**
- * Print each string that contains into %struct StringArray%. Printed information contain info about size of array and allocated space.
- * Also print length of each string before string.
- * @param fileName - Current file name, usually result of macros !__FILE__!
- * @param line - Current line, usually result of macros !__LINE__!
- * @param array - Array of strings
- * @param writeToBuffer - Write to buffer or to screen
- * @return Returns %struct String *% if $writeToBuffer$ is !true!
- */
-struct String *print_string_array(char *fileName, size_t line, struct StringArray *array, bool writeToBuffer);

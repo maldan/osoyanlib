@@ -165,23 +165,3 @@ struct Vector * file_search(const char *path, const char *filter, size_t flags) 
 
     return X;
 }
-
-struct String* print_file_info(const char *fileName, size_t line, struct FileInfo *data, bool writeToBuffer) {
-    NEW_STRING(X);
-
-    string_add(X, "FileInfo {\n");
-    /*string_add(X, "    path: %s\"%s\"%s,\n", ANSI_COLOR_GREEN, data->path, ANSI_COLOR_RESET);
-    string_add(X, "    fileName: %s\"%s\"%s,\n", ANSI_COLOR_GREEN, data->fileName, ANSI_COLOR_RESET);
-    string_add(X, "    size: %s%zu%s\n",  ANSI_COLOR_RED, data->size, ANSI_COLOR_RESET);*/
-    string_add(X, "    path: \"%s\",\n", data->path);
-    string_add(X, "    fileName: \"%s\",\n", data->fileName);
-    string_add(X, "    size: %zu\n", data->size);
-    string_add(X, "}\n");
-
-    if (!writeToBuffer) {
-        LOGGER_LOG(fileName, line, X->list);
-        DESTROY_STRING(X);
-    }
-
-    return X;
-}

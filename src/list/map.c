@@ -47,18 +47,3 @@ ssize_t map_key_index(struct Map *map, char *key) {
         if (strcmp(map->keys[i], key) == 0) return i;
     return -1;
 }
-
-struct String *print_map(char *fileName, size_t line, struct Map *map, bool writeToBuffer) {
-    NEW_STRING(X);
-
-    string_add(X, "Map <%s> [%zu:%zu] {\n", map->type, map->length, map->allocated);
-    for (size_t i = 0; i < map->length; ++i) {
-        string_add(X, "    \"%s\" => %p", map->keys[i], map->list[i]);
-        if (i < map->length - 1) string_add(X, ",\n");
-    }
-    string_add(X, "\n}\n");
-
-    LOGGER_LOG(fileName, line, X->list);
-    DESTROY_STRING(X);
-    return 0;
-}

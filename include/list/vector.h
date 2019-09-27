@@ -5,7 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "../../osoyan.h"
+#include <stdbool.h>
+#include "list.h"
+#include "../memory/memory.h"
+#include "../string/string.h"
 
 #define NEW_VECTOR(X, T) struct Vector *X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T)
 #define INIT_VECTOR(X, T) X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T);
@@ -47,16 +50,6 @@ void *vector_get(struct Vector *vector, ssize_t position);
 
 void vector_remove_at(struct Vector *vector, ssize_t at, size_t amount);
 
-/**
- * Print elements of $vector$. Printing values depends on type of $vector$. Usually it prints only pointers to elements.
- * By now it also can prints %char%, %struct String% and %struct FileInfo%. Information also contains type, length and allocated length of $vector$
- * @param fileName - Current file name, usually result of macros !__FILE__!
- * @param line - Current line, usually result of macros !__LINE__!
- * @param vector - Vector
- * @param writeToBuffer - Write to buffer or to screen
- * @return Returns %struct String *% if $writeToBuffer$ is !true!
- */
-struct String * print_vector(char *fileName, size_t line, struct Vector *vector, bool writeToBuffer);
 
 /*int vector_get(struct Vector *vector, size_t index, void **out);
 void vector_push(struct Vector *vector, void *value);

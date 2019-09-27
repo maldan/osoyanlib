@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "../../include/debug/logger.h"
+
 /*#define CLONE_CHARS(DST, SRC, V) char *V = MEMORY_ALLOCATE(strlen(SRC) + 1);\
 memcpy(V, SRC, strlen(SRC));\
 (DST) = V*/
@@ -37,7 +39,11 @@ ssize_t chars_index_of(const char *where, const char *pattern);
 
 char *chars_substr(const char *where, ssize_t startIndex, ssize_t toIndex);
 
+
 size_t chars_word_length(const char *word);
+
+
+size_t chars_utf8_length(const char *str);
 
 /**
  * Split chars array $string$ into pieces by $delimiter$. The result will be stored into new %struct StringArray%.
@@ -52,12 +58,3 @@ struct StringArray * chars_split(char *string, const char *delimiter, size_t max
 
 char *chars_clone(char *src);
 
-/**
- * Just print chars
- * @param fileName - Current file name, usually result of macros !__FILE__!
- * @param line - Current line, usually result of macros !__LINE__!
- * @param data - Chars array
- * @param writeToBuffer - Write to buffer or to screen
- * @return Returns %struct String *% if $writeToBuffer$ is !true!
- */
-struct String *print_chars(const char *fileName, size_t line, void *data, bool writeToBuffer);

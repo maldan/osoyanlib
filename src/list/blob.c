@@ -72,19 +72,3 @@ void blob_concat(struct Blob *dst, struct Blob *src) {
     dst->length += src->length;
     dst->position += src->length;
 }
-
-struct String * print_blob(char *fileName, size_t line, struct Blob *blob, bool writeToBuffer) {
-    NEW_STRING(X);
-    size_t counter = 0;
-    for (size_t i = 0; i < blob->length; ++i) {
-        string_add(X, "%.2X ", blob->list[i]);
-        if (counter++ > 12) {
-            counter = 0;
-            string_add(X, "\n");
-        }
-    }
-    string_add(X, "\n");
-    LOGGER_LOG(fileName, line, X->list);
-    DESTROY_STRING(X);
-    return 0;
-}

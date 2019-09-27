@@ -137,35 +137,3 @@ struct String *string_array_join(struct StringArray *array, char *glue) {
 void string_array_remove_at(struct StringArray *array, ssize_t at, size_t amount) {
     ARRAY_REMOVE_AT(array, size_t);
 }
-
-// Print string
-struct String *print_string(char *fileName, size_t line, struct String *string, bool writeToBuffer) {
-    NEW_STRING(X);
-    string_add(X, "String [%zu:%zu] {\n", string->length, string->allocated);
-    string_add(X, "    %s'%s'%s\n", ANSI_COLOR_GREEN, string->list, ANSI_COLOR_RESET);
-    string_add(X, "}\n");
-
-    LOGGER_LOG(fileName, line, X->list);
-    DESTROY_STRING(X);
-    return 0;
-}
-
-// Print string array
-struct String *print_string_array(char *fileName, size_t line, struct StringArray *array, bool writeToBuffer) {
-    size_t totalSize = 0;
-    for (size_t j = 0; j < array->length; ++j)
-        totalSize += array->list[j]->allocated;
-
-    NEW_STRING(X);
-
-    string_add(X, "StringArray [%zu:%zu] {\n", array->length, totalSize);
-    for (size_t i = 0; i < array->length; ++i) {
-        string_add(X, "    (%s%zu%s)%s'%s'%s", ANSI_COLOR_RED, array->list[i]->length, ANSI_COLOR_RESET, ANSI_COLOR_GREEN, array->list[i]->list, ANSI_COLOR_RESET);
-        if (i < array->length - 1) string_add(X, ",\n");
-    }
-    string_add(X, "\n}\n");
-
-    LOGGER_LOG(fileName, line, X->list);
-    DESTROY_STRING(X);
-    return 0;
-}
