@@ -21,8 +21,8 @@ struct MemoryBlock {
 #define GLOBAL_MEMORY_STATUS __UNIQSALT2281488OSOYANFOREVER_AND_SOSO__globalMemoryStatus
 
 #ifdef DEBUG
-#define MEMORY_INIT ____memory_init()
-//#define MEMORY_ALLOCATE_AT(FL, L, A, TYPE) ____memory_allocate(FL, L, #TYPE, A)
+#define MEMORY_INIT ____memory_init();
+// #define MEMORY_ALLOCATE_AT(FL, L, A, TYPE) ____memory_allocate(FL, L, #TYPE, A)
 #define MEMORY_ALLOCATE(A) ____memory_allocate(__BASE_FILE__, __LINE__, A)
 #define MEMORY_ALLOCATE_STRUCT(A) MEMORY_ALLOCATE(sizeof(struct A))
 #define MEMORY_REALLOCATE(A, S) ____memory_reallocate(__BASE_FILE__, __LINE__, A, S)
@@ -33,13 +33,14 @@ NEW_WSTRING(X) INIT_WSTRING(X, __xxx228) wprintf(L"\n%ls", X->list); };
 #define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) ____memory_copy(__BASE_FILE__, __LINE__, DST, SRC, SIZE, DST_START, DST_SIZE)
 #define MEMORY_IS_FREE ____memory_is_free()
 #else
-#define MEMORY_INIT NULL
+#define MEMORY_INIT NULL;
 //#define MEMORY_ALLOCATE_AT(FL, FN, L, A) calloc(1, A)
 #define MEMORY_ALLOCATE(A) calloc(1, A)
 #define MEMORY_ALLOCATE_STRUCT(A) calloc(1, sizeof(struct A))
 #define MEMORY_REALLOCATE(A, S) realloc(A, S)
-#define MEMORY_FREE(P) free(P)
+#define MEMORY_FREE(P) free(P);
 #define MEMORY_PRINT_STATE NULL;
+#define MEMORY_WPRINT_STATE NULL;
 #define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) memcpy(DST, SRC, SIZE)
 #define MEMORY_IS_FREE true
 #endif

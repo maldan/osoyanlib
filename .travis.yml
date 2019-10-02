@@ -28,7 +28,7 @@ script:
   # Build
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU -DENABLE_COVERAGE:BOOL=TRUE
+  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU -DENABLE_COVERAGE:BOOL=TRUE -DDEBUG
   - cmake --build .
   - ctest --output-on-failure
 
