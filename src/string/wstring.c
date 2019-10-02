@@ -54,3 +54,8 @@ void wstring_put_wchar(struct WString *wstring, wchar_t chr) {
     wstring->list[wstring->length - 1] = chr;
     wstring->list[wstring->length] = 0;
 }
+
+void wstring_clear(struct WString *wstring) {
+    wstring->list[0] = 0;
+    wstring->length = 0;
+}

@@ -165,6 +165,11 @@ struct String *print_int16(const char *fileName, size_t line, int16_t data, bool
     return 0;
 }
 
+struct String *print_rect(const char *fileName, size_t line, struct Rectangle *rect, bool writeToBuffer) {
+    LOGGER_LOG(fileName, line, "(Rectangle) x: %d, y: %d, width: %d, height: %d", rect->x, rect->y, rect->width, rect->height)
+    return 0;
+}
+
 void print_as_blob(char *array, size_t length) {
     NEW_STRING(X);
     size_t counter = 0;

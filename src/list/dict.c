@@ -60,5 +60,7 @@ char *dict_get(struct Dict *dict, char *key) {
 }
 
 int dict_get_int(struct Dict *dict, char *key) {
-    return chars_to_int(dict_get(dict, key));
+    char *val = dict_get(dict, key);
+    if (!val) return 0;
+    return chars_to_int(val);
 }

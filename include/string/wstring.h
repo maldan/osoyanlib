@@ -24,3 +24,5 @@ char wstring_char_at(struct WString *wstring, size_t position);
 void wstring_put(struct WString *wstring, const char *chars);
 
 void wstring_put_wchar(struct WString *wstring, wchar_t chr);
+
+void wstring_clear(struct WString *wstring);

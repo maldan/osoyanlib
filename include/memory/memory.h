@@ -26,8 +26,10 @@ struct MemoryBlock {
 #define MEMORY_ALLOCATE(A) ____memory_allocate(__BASE_FILE__, __LINE__, A)
 #define MEMORY_ALLOCATE_STRUCT(A) MEMORY_ALLOCATE(sizeof(struct A))
 #define MEMORY_REALLOCATE(A, S) ____memory_reallocate(__BASE_FILE__, __LINE__, A, S)
-#define MEMORY_FREE(P) ____memory_free(__BASE_FILE__, __LINE__, #P, P)
-#define MEMORY_PRINT_STATE ____memory_print_state();
+#define MEMORY_FREE(P) ____memory_free(__BASE_FILE__, __LINE__, #P, P);
+#define MEMORY_PRINT_STATE ____memory_print_state(false);
+#define MEMORY_WPRINT_STATE { char *__xxx228 = ____memory_print_state(true);\
+NEW_WSTRING(X) INIT_WSTRING(X, __xxx228) wprintf(L"\n%ls", X->list); };
 #define MEMORY_COPY(DST, SRC, SIZE, DST_START, DST_SIZE) ____memory_copy(__BASE_FILE__, __LINE__, DST, SRC, SIZE, DST_START, DST_SIZE)
 #define MEMORY_IS_FREE ____memory_is_free()
 #else
@@ -53,7 +55,7 @@ void ____memory_init();
  * If your current allocation is 0 pointer and [0] bytes it's cool, that means you free all memory you allocated and you
  * doesn't have memory leak. Note, if you free pointer then information about allocation about the pointer removes from global table.
  */
-void ____memory_print_state();
+char * ____memory_print_state(bool writeInBuffer);
 
 char * ____memory_get_state();
 

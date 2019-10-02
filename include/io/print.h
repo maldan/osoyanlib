@@ -12,6 +12,7 @@
 #include "../string/chars.h"
 #include "../string/string.h"
 #include "../string/wstring.h"
+#include "../geom/rect.h"
 
 #define PRINT(O) _Generic((O), \
 char*: print_chars, \
@@ -25,6 +26,7 @@ struct Vector*: print_vector, \
 struct FileInfo*: print_file_info, \
 struct Blob*: print_blob, \
 struct Dict*: print_dict, \
+struct Rectangle*: print_rect, \
 default: print_default)(__FILE__, __LINE__, O, false);
 
 #define PRINT_TO_BUFFER(O) _Generic((O), \
@@ -114,5 +116,7 @@ struct String *print_size_t(const char *fileName, size_t line, size_t data, bool
 struct String *print_int(const char *fileName, size_t line, int data, bool writeToBuffer);
 
 struct String *print_int16(const char *fileName, size_t line, int16_t data, bool writeToBuffer);
+
+struct String *print_rect(const char *fileName, size_t line, struct Rectangle *rect, bool writeToBuffer);
 
 void print_as_blob(char *array, size_t length);

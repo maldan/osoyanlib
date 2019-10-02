@@ -10,10 +10,10 @@
 #include "../memory/memory.h"
 #include "../string/string.h"
 
-#define NEW_VECTOR(X, T) struct Vector *X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T)
+#define NEW_VECTOR(X, T) struct Vector *X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T);
 #define INIT_VECTOR(X, T) X = MEMORY_ALLOCATE_STRUCT(Vector); ____vector_init(X, #T);
 #define EQU_VECTOR(X) struct Vector *X
-#define DESTROY_VECTOR(X) ____vector_free(X)
+#define DESTROY_VECTOR(X) ____vector_free(X);
 
 struct Vector {
     DEFAULT_ARRAY_STRUCT(void**)
@@ -50,6 +50,7 @@ void *vector_get(struct Vector *vector, ssize_t position);
 
 void vector_remove_at(struct Vector *vector, ssize_t at, size_t amount);
 
+void vector_clear(struct Vector *vector);
 
 /*int vector_get(struct Vector *vector, size_t index, void **out);
 void vector_push(struct Vector *vector, void *value);

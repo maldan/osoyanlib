@@ -25,6 +25,11 @@ void vector_remove_at(struct Vector *vector, ssize_t at, size_t amount) {
     ARRAY_REMOVE_AT(vector, size_t);
 }
 
+void vector_clear(struct Vector *vector) {
+    memset(vector->list, 0, vector->length * sizeof(void *));
+    vector->length = 0;
+}
+
 /*int vector_get(struct Vector *vector, uint64_t position, void **out) {
     if (position >= vector->size) return 0;
     *out = vector->list[position];
