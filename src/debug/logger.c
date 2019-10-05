@@ -3,6 +3,12 @@
 #include <asm/ioctls.h>
 #include <sys/ioctl.h>
 #include <libgen.h>
+#include <stdarg.h>
+
+/* Standard file descriptors.  */
+#define	STDIN_FILENO	0	/* Standard input.  */
+#define	STDOUT_FILENO	1	/* Standard output.  */
+#define	STDERR_FILENO	2	/* Standard error output.  */
 
 void logger_log(const char *fileName, size_t line, const char *format, ...) {
     // Get terminal size

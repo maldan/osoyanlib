@@ -20,10 +20,12 @@
 
 #include <asm/ioctls.h>
 #include <sys/ioctl.h>
-#include <zconf.h>
+// #include <zconf.h>
 #include <termios.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+extern int isatty (int __fd) __THROW;
 
 struct winsize console_get_window_size();
 void console_non_canonical_mode();
