@@ -1,19 +1,24 @@
 #include "../../include/debug/logger.h"
 #include <time.h>
+
+#ifdef __MINGW32__
+#include <windows.h>
+#else
 #include <asm/ioctls.h>
 #include <sys/ioctl.h>
+#endif
+
 #include <libgen.h>
 #include <stdarg.h>
 
-/* Standard file descriptors.  */
-#define	STDIN_FILENO	0	/* Standard input.  */
-#define	STDOUT_FILENO	1	/* Standard output.  */
-#define	STDERR_FILENO	2	/* Standard error output.  */
+
 
 void logger_log(const char *fileName, size_t line, const char *format, ...) {
     // Get terminal size
-    struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    struct winsize w = console_get_window_size();
+    //#else
+    //ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    //#endif
 
     // Get tile Time
     time_t rawtime;

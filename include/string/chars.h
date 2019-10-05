@@ -3,8 +3,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdint.h>
 
-#include "../../include/debug/logger.h"
+#include <math.h>
+#include <sys/param.h>
+
+#ifdef __MINGW32__
+#include <pcreposix.h>
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+#else
+#include <regex.h>
+#endif
+
+#include "../../include/string/string.h"
+#include "../../include/memory/memory.h"
 
 #define CHARS_COPY_TO(DST, SRC) (DST) = MEMORY_ALLOCATE(strlen(SRC) + 1);\
 memcpy((DST), SRC, strlen(SRC))
@@ -33,7 +45,7 @@ long chars_to_long(const char *source);
  * @param pattern - Search pattern
  * @return Returns index of found $pattern$. Returns -1 if $pattern$ not found.
  */
-ssize_t chars_index_of(const char *where, const char *pattern);
+long chars_index_of(const char *where, const char *pattern);
 
 char *chars_substr(const char *where, ssize_t startIndex, ssize_t toIndex);
 

@@ -1,8 +1,11 @@
 #pragma once
 
-#include "../io/file.h"
-#include "../string/string.h"
+//#include "../io/file.h"
+//#include "../string/string.h"
 #include <stdbool.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 struct MemoryStatus {
     size_t allocationTotalAmount;

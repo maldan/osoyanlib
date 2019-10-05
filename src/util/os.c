@@ -1,7 +1,13 @@
-#include <pwd.h>
 #include "../../include/util/os.h"
 #include "../../include/string/string.h"
 
+#ifdef __MINGW32__
+char *os_home_dir(char *addPath) {
+    puts("Not working in winodws");
+    exit(1);
+    return "sas";
+}
+#else
 char *os_home_dir(char *addPath) {
     struct passwd *pw = getpwuid(getuid());
     char *homedir = pw->pw_dir;
@@ -19,3 +25,4 @@ char *os_home_dir(char *addPath) {
 
     return finalPath;
 }
+#endif

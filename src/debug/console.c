@@ -1,10 +1,6 @@
 #include "../../include/debug/console.h"
 
-/* Standard file descriptors.  */
-#define	STDIN_FILENO	0	/* Standard input.  */
-#define	STDOUT_FILENO	1	/* Standard output.  */
-#define	STDERR_FILENO	2	/* Standard error output.  */
-
+#ifndef __MINGW32__
 struct termios saved_attributes;
 
 struct winsize console_get_window_size() {
@@ -49,3 +45,25 @@ void console_fill_screen(char chr) {
         }
     }
 }
+#else
+struct winsize console_get_window_size() {
+    int columns, rows;
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+    struct winsize win;
+    win.ws_col = columns;
+    win.ws_row = rows;
+    return win;
+}
+void console_restore_terminal_mode(void) {
+
+}
+void console_non_canonical_mode() {
+
+}
+void console_fill_screen(char chr) {
+
+}
+#endif

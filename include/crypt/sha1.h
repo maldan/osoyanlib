@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdint.h>
+#include "../list/blob.h"
 
 /**
  * Hash $str$ by sha1 algorithm.

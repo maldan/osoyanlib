@@ -5,6 +5,11 @@
 #include "../io/file.h"
 #include "console.h"
 
+/* Standard file descriptors.  */
+#define	STDIN_FILENO	0	/* Standard input.  */
+#define	STDOUT_FILENO	1	/* Standard output.  */
+#define	STDERR_FILENO	2	/* Standard error output.  */
+
 #define LOGGER_LOG(fileName, line, ...) logger_log(fileName, line, __VA_ARGS__);
 #define LOGGER_HALT(fileName, line, ...) { printf("Error in file %s:%d\n", fileName, line); printf(__VA_ARGS__); exit(1); }
 
