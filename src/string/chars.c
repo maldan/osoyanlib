@@ -185,3 +185,11 @@ bool chars_match(char *src, char *pattern, size_t flags) {
     if (reti2) return false;
     return true;
 }
+
+size_t chars_char_amount(char *src, char chr) {
+    size_t len = strlen(src);
+    size_t out = 0;
+    for (size_t i = 0; i < len; ++i)
+        if (src[i] == chr) out++;
+    return out;
+}

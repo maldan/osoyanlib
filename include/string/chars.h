@@ -59,3 +59,5 @@ void chars_set(char *dst, char *src, size_t dstMax);
 char *chars_replace(char *src, char *pattern, char *replace);
 
 bool chars_match(char *src, char *pattern, size_t flags);
+
+size_t chars_char_amount(char *src, char chr);
