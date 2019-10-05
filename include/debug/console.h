@@ -27,3 +27,4 @@
 
 struct winsize console_get_window_size();
 void console_non_canonical_mode();
+void console_fill_screen(char);

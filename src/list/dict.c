@@ -27,10 +27,10 @@ void dict_add(struct Dict *dict, char *key, char *value) {
 
     long index = dict_key_index(dict, key);
     if (index >= 0) {
-        CLONE_CHARS(dict->list[index], value);
+        CHARS_COPY_TO(dict->list[index], value);
     } else {
-        CLONE_CHARS(dict->keys[dict->length], key);
-        CLONE_CHARS(dict->list[dict->length], value);
+        CHARS_COPY_TO(dict->keys[dict->length], key);
+        CHARS_COPY_TO(dict->list[dict->length], value);
         dict->length++;
     }
 }

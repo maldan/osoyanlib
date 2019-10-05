@@ -55,7 +55,7 @@ void blob_put_chars(struct Blob *blob, char *chars, ssize_t position) {
     }
 }
 
-void blob_put_bytes(struct Blob *blob, uint8_t *bytes, ssize_t position, size_t size) {
+void blob_put_bytes(struct Blob *blob, uint8_t *bytes, size_t size, ssize_t position) {
     // @TODO position is ignore
     for (size_t i = 0; i < size; ++i) {
         blob_put8(blob, bytes[i], position);

@@ -34,3 +34,13 @@ void console_non_canonical_mode() {
     // tcsetattr(STDIN_FILENO, TCSAFLUSH, &tattr);
     tcsetattr(0,TCSANOW, &tattr);
 }
+
+void console_fill_screen(char chr) {
+    struct winsize size = console_get_window_size();
+    printf("%s", "\x1b[H");
+    for (size_t i = 0; i < size.ws_row; ++i) {
+        for (size_t j = 0; j < size.ws_col; ++j) {
+            printf("%c", chr);
+        }
+    }
+}

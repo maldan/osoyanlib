@@ -28,7 +28,7 @@ struct ArgList *args_init(int amount, char **args) {
             }
             MEMORY_FREE(tempValue);
             char *tmp;
-            CLONE_CHARS(tmp, args[i]);
+            CHARS_COPY_TO(tmp, args[i]);
             dict_add(X->keys, currentKey + 2, tmp);
             currentKey = 0;
         }

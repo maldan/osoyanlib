@@ -19,11 +19,11 @@
 
 #define NEW_FILE_INFO(X, PATH) struct FileInfo *X = file_get_info(PATH, false);
 #define DESTROY_FILE_INFO(X) MEMORY_FREE((X)->data); MEMORY_FREE((X)->path); MEMORY_FREE(X)
-#define DESTROY_FILE_SEARCH_RESULT(X) for (size_t ii_53534536xcvsdf42g = 0; ii_53534536xcvsdf42g < sas->length; ++ii_53534536xcvsdf42g) {\
-DESTROY_FILE_INFO(((struct FileInfo *)sas->list[ii_53534536xcvsdf42g]));\
+#define DESTROY_FILE_SEARCH_RESULT(X) for (size_t ii_53534536xcvsdf42g = 0; ii_53534536xcvsdf42g < X->length; ++ii_53534536xcvsdf42g) {\
+DESTROY_FILE_INFO(((struct FileInfo *)X->list[ii_53534536xcvsdf42g]));\
 }\
-MEMORY_FREE(sas->list);\
-MEMORY_FREE(sas)
+MEMORY_FREE(X->list);\
+MEMORY_FREE(X)
 
 #define CURRENT_EXE_LOCATION(X) char *X = MEMORY_ALLOCATE(FILENAME_MAX); readlink("/proc/self/exe", X, FILENAME_MAX)
 
@@ -36,7 +36,11 @@ struct FileInfo {
 
 struct FileInfo *file_get_info(const char *path, bool includeContent);
 
+struct Blob *file_get_slice_of_contents(const char *path, size_t start, size_t length);
+
 struct Blob *file_get_contents(const char *path);
+
+size_t file_get_size(const char *path);
 
 /**
  * Put $buffer$ into a file at specified $path$. It will overwrite the previous file. File will be created if it doesnt't exist.
@@ -58,3 +62,4 @@ bool file_put_blob(const char *path, struct Blob *blob);
  */
 struct Vector *file_search(const char *path, const char *filter, size_t flags);
 
+bool file_copy(char *fromPath, char *toPath);

@@ -26,6 +26,7 @@
 #include "include/string/base64.h"
 #include "include/string/chars.h"
 #include "include/io/file.h"
+#include "include/io/print.h"
 #include "include/debug/logger.h"
 #include "include/debug/console.h"
 #include "include/crypt/sha1.h"
@@ -37,9 +38,10 @@
 #include "include/util/args.h"
 #include "include/util/color.h"
 #include "include/util/number.h"
+#include "include/util/os.h"
 #include "include/net/http.h"
 #include "include/net/websocket.h"
-// #include "include/ui/termui.h"
+#include "include/ui/termui.h"
 
 
 

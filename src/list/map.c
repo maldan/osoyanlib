@@ -30,7 +30,7 @@ void map_add(struct Map *map, char *key, void *value) {
     if (index >= 0) {
         map->list[index] = value;
     } else {
-        CLONE_CHARS(map->keys[map->length], key);
+        CHARS_COPY_TO(map->keys[map->length], key);
         map->list[map->length] = value;
         map->length++;
     }

@@ -7,6 +7,8 @@
 #include "../list/dict.h"
 #include "../list/map.h"
 
+#define TERMUI_RENDER_NO_OUTPUT 1
+
 struct TermUiDocument {
     EQU_MAP(idList);
     EQU_VECTOR(styleNodes);
@@ -14,6 +16,7 @@ struct TermUiDocument {
     wchar_t *screenBuffer;
     uint32_t *paramBuffer;
     struct Rectangle screen;
+    bool isTerminalOutput;
 };
 
 struct TermUiNode {
@@ -39,7 +42,9 @@ struct TermUiNode {
 struct TermUiDocument *termui_create_document();
 struct TermUiNode *termui_create_node();
 
-void termui_render(struct TermUiDocument *document);
+struct TermUiNode *termui_get_node(struct TermUiDocument *document, char *id);
+
+void termui_render(struct TermUiDocument *document, uint8_t params);
 
 void termui_destroy_node(struct TermUiNode *node);
 void termui_destroy_document(struct TermUiDocument *document);

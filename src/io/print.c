@@ -170,6 +170,12 @@ struct String *print_rect(const char *fileName, size_t line, struct Rectangle *r
     return 0;
 }
 
+struct String *print_bool(const char *fileName, size_t line, bool val, bool writeToBuffer) {
+    if (val) LOGGER_LOG(fileName, line, "(bool) true", val)
+    else LOGGER_LOG(fileName, line, "(bool) false", val)
+    return 0;
+}
+
 void print_as_blob(char *array, size_t length) {
     NEW_STRING(X);
     size_t counter = 0;

@@ -17,6 +17,7 @@
 #define PRINT(O) _Generic((O), \
 char*: print_chars, \
 int: print_int, \
+bool: print_bool, \
 int16_t: print_int16, \
 size_t: print_size_t, \
 struct String*: print_string, \
@@ -118,5 +119,7 @@ struct String *print_int(const char *fileName, size_t line, int data, bool write
 struct String *print_int16(const char *fileName, size_t line, int16_t data, bool writeToBuffer);
 
 struct String *print_rect(const char *fileName, size_t line, struct Rectangle *rect, bool writeToBuffer);
+
+struct String *print_bool(const char *fileName, size_t line, bool val, bool writeToBuffer);
 
 void print_as_blob(char *array, size_t length);

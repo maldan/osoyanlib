@@ -6,12 +6,10 @@
 
 #include "../../include/debug/logger.h"
 
-/*#define CLONE_CHARS(DST, SRC, V) char *V = MEMORY_ALLOCATE(strlen(SRC) + 1);\
-memcpy(V, SRC, strlen(SRC));\
-(DST) = V*/
-
-#define CLONE_CHARS(DST, SRC) (DST) = MEMORY_ALLOCATE(strlen(SRC) + 1);\
+#define CHARS_COPY_TO(DST, SRC) (DST) = MEMORY_ALLOCATE(strlen(SRC) + 1);\
 memcpy((DST), SRC, strlen(SRC))
+
+#define CHARS_EQUAL(X, X2) strcmp(X, X2) == 0
 
 #define HEX_TO_INT(X) (int)strtol(X, NULL, 16);
 
@@ -39,9 +37,7 @@ ssize_t chars_index_of(const char *where, const char *pattern);
 
 char *chars_substr(const char *where, ssize_t startIndex, ssize_t toIndex);
 
-
 size_t chars_word_length(const char *word);
-
 
 size_t chars_utf8_length(const char *str);
 
@@ -58,3 +54,8 @@ struct StringArray * chars_split(char *string, const char *delimiter, size_t max
 
 char *chars_clone(char *src);
 
+void chars_set(char *dst, char *src, size_t dstMax);
+
+char *chars_replace(char *src, char *pattern, char *replace);
+
+bool chars_match(char *src, char *pattern, size_t flags);

@@ -154,7 +154,7 @@ struct HttpQuery *http_query_get(char *url) {
     for (ssize_t i = 0; i < n; ++i) {
         if (strncmp(recvBuff + i, "\r\n\r\n", 4) == 0) {
             startOfHeader = i + 4;
-            blob_put_bytes(responseBody, (uint8_t *)recvBuff + startOfHeader, -1, n - startOfHeader);
+            blob_put_bytes(responseBody, (uint8_t *)recvBuff + startOfHeader,  n - startOfHeader, -1);
             break;
         }
     }
@@ -162,7 +162,7 @@ struct HttpQuery *http_query_get(char *url) {
     // Get rest
     while ((n = read(requestSocketId, recvBuff, sizeof(recvBuff) - 1)) > 0) {
         recvBuff[n] = 0;
-        blob_put_bytes(responseBody, (uint8_t *)recvBuff, -1, n);
+        blob_put_bytes(responseBody, (uint8_t *)recvBuff, n, -1);
     }
 
     struct HttpQuery *httpQuery = MEMORY_ALLOCATE_STRUCT(HttpQuery);

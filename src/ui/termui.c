@@ -31,10 +31,31 @@ struct TermUiNode *termui_create_node() {
     return node;
 }
 
+struct TermUiNode *____termui_get_node(struct TermUiNode *node, char *id) {
+    if (strcmp(node->id->list, id) == 0) return node;
+    for (size_t i = 0; i < node->nodes->length; ++i) {
+        struct TermUiNode *innerNode = ____termui_get_node(node->nodes->list[i], id);
+        if (innerNode) return innerNode;
+    }
+    return 0;
+}
+
+struct TermUiNode *termui_get_node(struct TermUiDocument *document, char *id) {
+    return ____termui_get_node(document->root, id);
+}
+
 // Render
 void ____termui_prepare_document(struct TermUiDocument *document) {
     // Get terminal size
     struct winsize winSize = console_get_window_size();
+    document->isTerminalOutput = true;
+
+    // Probably render to file
+    if (winSize.ws_col == 0) {
+        winSize.ws_row = 24;
+        winSize.ws_col = 48;
+        document->isTerminalOutput = false;
+    }
 
     // Allocate screen buffer if not exists
     if (!document->screenBuffer)
@@ -203,7 +224,7 @@ void ____termui_render_layout(struct TermUiDocument *document, struct TermUiNode
     }
 }
 
-void termui_render(struct TermUiDocument *document) {
+void termui_render(struct TermUiDocument *document, uint8_t params) {
     // Create buffers, check if resized etc
     ____termui_prepare_document(document);
 
@@ -212,19 +233,27 @@ void termui_render(struct TermUiDocument *document) {
 
     ____termui_render_layout(document, document->root);
 
+    // If render is disabled
+    if (params == TERMUI_RENDER_NO_OUTPUT) return;
+
     NEW_WSTRING(finalString)
-    wstring_put(finalString, "\x1b[H");
-    wstring_put(finalString, ANSI_HIDE_CURSOR);
+    if (document->isTerminalOutput) {
+        wstring_put(finalString, "\x1b[H");
+        wstring_put(finalString, ANSI_HIDE_CURSOR);
+    }
 
     for (int j = 0; j < document->screen.height; ++j) {
         for (int i = 0; i < document->screen.width; ++i) {
             // printf("%d\n", document->screenBuffer[i % document->screen.width + j % document->screen.height * document->screen.width]);
             wstring_put_wchar(finalString, document->screenBuffer[i % document->screen.width + j % document->screen.height * document->screen.width]);
         }
+        if (!document->isTerminalOutput) wstring_put(finalString, "\n");
     }
 
     // Print on screen
-    wstring_put(finalString, ANSI_SHOW_CURSOR);
+    if (document->isTerminalOutput) {
+        wstring_put(finalString, ANSI_SHOW_CURSOR);
+    }
 
     fputws(finalString->list, stdout);
     fflush(stdout);
