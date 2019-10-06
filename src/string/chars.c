@@ -1,12 +1,11 @@
 #include "../../include/string/chars.h"
-#include <math.h>
-#include <sys/param.h>
+
 
 int chars_to_int(const char *str) {
     return (int)chars_to_long(str);
 }
 
-ssize_t chars_to_long(const char *str) {
+long chars_to_long(const char *str) {
     char num[48];
 
     // Copy valid part of number
@@ -173,6 +172,7 @@ char *chars_replace(char *src, char *pattern, char *replace) {
 }
 
 bool chars_match(char *src, char *pattern, size_t flags) {
+
     // Compile regex
     regex_t filterRegex;
     int reti = regcomp(&filterRegex, pattern, REG_EXTENDED | flags);

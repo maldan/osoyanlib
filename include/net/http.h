@@ -1,11 +1,18 @@
 #pragma once
 
-#include <stdio.h>
+#ifdef __MINGW32__
+#else
 #include <sys/socket.h>
-#include <fcntl.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#endif
+
+#include <stdio.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "../../include/list/dict.h"
 

@@ -4,7 +4,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <regex.h>
+
+#ifdef __MINGW32__
+#else
+    #include <regex.h>
+#endif
+
 #include <dirent.h>
 #include <libgen.h>
 

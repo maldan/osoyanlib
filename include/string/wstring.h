@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include "../string/chars.h"
 #include "../list/list.h"
 #include "../memory/memory.h"
 

@@ -1,5 +1,4 @@
-#include <arpa/inet.h>
-#include <netdb.h>
+
 #include "../../include/net/http.h"
 #include "../../include/debug/logger.h"
 

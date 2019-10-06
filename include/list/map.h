@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "list.h"
 #include "../memory/memory.h"
+#include "../string/chars.h"
 #include "../string/string.h"
 
 #define NEW_MAP(X, T) struct Map *X = MEMORY_ALLOCATE_STRUCT(Map); ____map_init(X, #T);

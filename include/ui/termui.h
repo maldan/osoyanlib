@@ -5,6 +5,7 @@
 #include "../string/string.h"
 #include "../string/wstring.h"
 #include "../list/dict.h"
+#include "../list/vector.h"
 #include "../list/map.h"
 
 #define TERMUI_RENDER_NO_OUTPUT 1

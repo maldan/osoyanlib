@@ -6,6 +6,7 @@
 #include <limits.h>
 
 #include "../../include/memory/memory.h"
+#include "../list/blob.h"
 
 /**
  * Hash $str$ by sha1 algorithm.

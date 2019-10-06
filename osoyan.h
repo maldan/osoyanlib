@@ -13,12 +13,17 @@
 #include <stdarg.h>
 #include <libgen.h>
 #include <dirent.h>
+
+#ifdef __MINGW32__
+#else
 #include <wait.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#endif
+
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <fcntl.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <errno.h>
 
 #include "include/memory/memory.h"

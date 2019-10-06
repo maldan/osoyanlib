@@ -124,6 +124,12 @@ bool file_put_blob(const char *path, struct Blob *blob) {
     return file_put_contents(path, blob->list, blob->length);
 }
 
+#ifdef __MINGW32__
+void ____file_real_search(struct Vector *fileInfoList, const char *path, regex_t *filter, size_t flags) {
+    puts("Not working in windows");
+    exit(1);
+}
+#else
 void ____file_real_search(struct Vector *fileInfoList, const char *path, regex_t *filter, size_t flags) {
     DIR *d = opendir(path);
     struct dirent *dir;
@@ -191,9 +197,15 @@ void ____file_real_search(struct Vector *fileInfoList, const char *path, regex_t
         exit(1);
     }
 }
+#endif
+
 
 struct Vector * file_search(const char *path, const char *filter, size_t flags) {
-    NEW_VECTOR(X, struct FileInfo);
+#ifdef __MINGW32__
+    puts("Not working in windows");
+    exit(1);
+#else
+    NEW_VECTOR(X, struct FileInfo)
 
     // Compile regex
     regex_t filterRegex;
@@ -213,6 +225,7 @@ struct Vector * file_search(const char *path, const char *filter, size_t flags) 
     regfree(&filterRegex);
 
     return X;
+#endif
 }
 
 bool file_copy(char *fromPath, char *toPath) {

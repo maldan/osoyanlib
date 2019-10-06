@@ -18,14 +18,26 @@
 
 #define ANSI_BOLD "\x1b[1m"
 
-#include <asm/ioctls.h>
-#include <sys/ioctl.h>
-// #include <zconf.h>
-#include <termios.h>
+#define	STDIN_FILENO	0
+#define	STDOUT_FILENO	1
+#define	STDERR_FILENO	2
+
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 
+#ifdef __MINGW32__
+#include <windows.h>
+struct winsize {
+    uint16_t ws_col;
+    uint16_t ws_row;
+};
+#else
+#include <asm/ioctls.h>
+#include <sys/ioctl.h>
+#include <termios.h>
 extern int isatty (int __fd) __THROW;
+#endif
 
 struct winsize console_get_window_size();
 void console_non_canonical_mode();

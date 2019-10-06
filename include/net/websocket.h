@@ -1,5 +1,10 @@
 #pragma once
 
+#ifdef __MINGW32__
+#else
+#include <sys/socket.h>
+#endif
+
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
@@ -7,6 +12,8 @@
 #include <limits.h>
 #include <sys/socket.h>
 #include "../string.h"
+
+#include "../../include/string/string.h"
 #include "../../include/crypt/sha1.h"
 #include "../../include/string/base64.h"
 #include "../../include/list/blob.h"

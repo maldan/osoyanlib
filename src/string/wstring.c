@@ -1,4 +1,4 @@
-#include <netinet/in.h>
+// #include <netinet/in.h>
 #include "../../include/string/wstring.h"
 
 void ____wstring_init(struct WString *wstring) {
