@@ -200,7 +200,11 @@ void ____file_real_search(struct Vector *fileInfoList, const char *path, regex_t
 
 
 struct Vector * file_search(const char *path, const char *filter, size_t flags) {
-    NEW_VECTOR(X, struct FileInfo);
+#ifdef __MINGW32__
+    puts("Not working in windows");
+    exit(1);
+#else
+    NEW_VECTOR(X, struct FileInfo)
 
     // Compile regex
     regex_t filterRegex;
@@ -220,6 +224,7 @@ struct Vector * file_search(const char *path, const char *filter, size_t flags) 
     regfree(&filterRegex);
 
     return X;
+#endif
 }
 
 bool file_copy(char *fromPath, char *toPath) {
