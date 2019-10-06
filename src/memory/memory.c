@@ -1,5 +1,4 @@
 #include "../../include/memory/memory.h"
-#include <sys/types.h>
 
 size_t GLOBAL_MEMORY_TABLE_SIZE = 0;
 struct MemoryBlock **GLOBAL_MEMORY_TABLE;
