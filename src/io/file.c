@@ -115,6 +115,7 @@ size_t file_get_size(const char *path) {
     fseek(file, 0, SEEK_END);
     fileLength = ftell(file);
     fseek(file, 0, SEEK_SET);
+    fclose(file);
 
     return fileLength;
 }

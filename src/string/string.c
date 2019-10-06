@@ -44,6 +44,7 @@ void string_add(struct String *string, char *format, ...) {
     // Measure string length
     size_t length = vsnprintf(NULL, 0, format, argPtr);
     str = MEMORY_ALLOCATE(length + 1);
+    va_end(argPtr);
 
     // Add formatted string
     va_start(argPtr, format);

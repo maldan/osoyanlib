@@ -34,6 +34,7 @@ void logger_log(const char *fileName, size_t line, const char *format, ...) {
     char *str = MEMORY_ALLOCATE(length + 1);
 
     // Add formatted string
+    va_end(argPtr);
     va_start(argPtr, format);
     vsprintf(str, format, argPtr);
     string_put(string, str);
