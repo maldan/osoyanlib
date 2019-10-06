@@ -50,7 +50,7 @@ void blob_put64(struct Blob *blob, int64_t value, ssize_t position) {
 
 void blob_put_chars(struct Blob *blob, char *chars, ssize_t position) {
     // @TODO position is ignore
-    for (size_t i = 0; i < strlen(chars); ++i) {
+    for (size_t i = 0; i < strnlen(chars, UINT32_MAX); ++i) {
         blob_put8(blob, chars[i], position);
     }
 }

@@ -1,5 +1,4 @@
 #include "../../include/crypt/sha1.h"
-#include "../../include/memory/memory.h"
 
 typedef struct {
     uint32_t state[5];
@@ -207,5 +206,5 @@ struct Blob * sha1(void *str, size_t len) {
 }
 
 struct Blob * sha1_chars(char *str) {
-    return sha1(str, strlen(str));
+    return sha1(str, strnlen(str, UINT32_MAX));
 }

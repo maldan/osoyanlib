@@ -1,12 +1,12 @@
 #include "../../include/net/websocket.h"
-#include "../../include/list/blob.h"
+
 
 void websocket_frame(char *input, uint32_t length, uint8_t **out, uint32_t *outLength) {
     uint32_t finalLength = length;
-    if (finalLength == 0) finalLength = strlen(input);
+    if (finalLength == 0) finalLength = strnlen(input, UINT32_MAX);
 
     uint8_t *package = malloc(2 + finalLength);
-    package[0] = 0b10000001;
+    package[0] = 0x81; // 0b10000001;
     package[1] = finalLength;
     memcpy(package + 2, input, finalLength);
 
@@ -46,8 +46,6 @@ int websocket_handshake(char *headers, char *key) {
         }
     }*/
 
-
-
     for (size_t i = 0; i < kv->length; ++i) {
         struct StringArray *tmp = chars_split(kv->list[i]->list, ": ", 0);
 
@@ -58,8 +56,6 @@ int websocket_handshake(char *headers, char *key) {
             }
         }
     }
-
-
 
     // Free keys & values
     //chars_array_free(keys, kvLength);
@@ -83,8 +79,8 @@ int websocket_handshake(char *headers, char *key) {
 
     // Generate base64
     char *final = base64_encode(results->list, 20);
-    memcpy(key, final, strlen(final));
-    key[strlen(final)] = '\0';
+    memcpy(key, final, strnlen(final, 2048));
+    key[strnlen(final, 2048)] = '\0';
 
     printf("Key %s\n", key);
 
@@ -105,15 +101,15 @@ int websocket_switch_protocol(int socket, char *headers) {
         return 0;
 
     websocket_switch_protocol_header(handshake, header);
-    send(socket, header, strlen(header), 0);
+    send(socket, header, strnlen(header, sizeof(header)), 0);
 
     return 1;
 }
 
 void websocket_parse_frame(char *input, char *out) {
-    int opCode = input[0] & 0b0001111;
-    int isMask = (input[1] & 0b10000000) >> 7;
-    int length = (input[1] & 0b01111111);
+    int opCode = input[0] & 0x0Fu; //0b0001111;
+    int isMask = (input[1] & 0x80u) >> 7u; //(input[1] & 0b10000000) >> 7;
+    int length = (input[1] & 0x7F); // (input[1] & 0b01111111);
     char mask[4];
     memcpy(&mask, input + 2, 4);
 

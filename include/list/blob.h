@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <limits.h>
 #include "list.h"
 #include "../memory/memory.h"
 #include "../string/string.h"

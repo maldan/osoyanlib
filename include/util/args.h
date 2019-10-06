@@ -2,6 +2,7 @@
 
 #include <stddef.h>
 #include <stdbool.h>
+#include <limits.h>
 #include "../memory/memory.h"
 #include "../list/dict.h"
 

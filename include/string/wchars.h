@@ -3,6 +3,7 @@
 #include <wchar.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 
 #include "../../include/memory/memory.h"
 

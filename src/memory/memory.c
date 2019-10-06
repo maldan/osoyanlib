@@ -17,13 +17,13 @@ char * ____memory_print_state(bool writeInBuffer) {
     size_t size = 0;
     for (size_t i = 0; i < GLOBAL_MEMORY_TABLE_SIZE; ++i) {
         size += GLOBAL_MEMORY_TABLE[i]->size;
-        sprintf(str + strlen(str), "ALLOC[%zu, %p] -> %s:%zu\n", GLOBAL_MEMORY_TABLE[i]->size,
+        sprintf(str + strnlen(str, UINT16_MAX), "ALLOC[%zu, %p] -> %s:%zu\n", GLOBAL_MEMORY_TABLE[i]->size,
                GLOBAL_MEMORY_TABLE[i]->pointer,
                GLOBAL_MEMORY_TABLE[i]->fileName,
                GLOBAL_MEMORY_TABLE[i]->line);
     }
-    sprintf(str + strlen(str),"TOTAL ALLOCATION: %zu pointers, [%zu] bytes\n", GLOBAL_MEMORY_STATUS->allocationTotalAmount, GLOBAL_MEMORY_STATUS->allocationTotalSize);
-    sprintf(str + strlen(str),"CURRENT ALLOCATION: %zu pointers, [%zu] bytes\n", GLOBAL_MEMORY_TABLE_SIZE, size);
+    sprintf(str + strnlen(str, UINT16_MAX),"TOTAL ALLOCATION: %zu pointers, [%zu] bytes\n", GLOBAL_MEMORY_STATUS->allocationTotalAmount, GLOBAL_MEMORY_STATUS->allocationTotalSize);
+    sprintf(str + strnlen(str, UINT16_MAX),"CURRENT ALLOCATION: %zu pointers, [%zu] bytes\n", GLOBAL_MEMORY_TABLE_SIZE, size);
 
     if (writeInBuffer) return str;
     printf("%s", str);
@@ -37,8 +37,8 @@ char * ____memory_get_state() {
     for (size_t i = 0; i < GLOBAL_MEMORY_TABLE_SIZE; ++i) {
         size += GLOBAL_MEMORY_TABLE[i]->size;
     }
-    sprintf(out + strlen(out), "TOTAL: %zu ptrs, [%zu] b ", GLOBAL_MEMORY_STATUS->allocationTotalAmount, GLOBAL_MEMORY_STATUS->allocationTotalSize);
-    sprintf(out + strlen(out), "CURRENT: %zu ptrs, [%zu] b", GLOBAL_MEMORY_TABLE_SIZE, size);
+    sprintf(out + strnlen(out, UINT16_MAX), "TOTAL: %zu ptrs, [%zu] b ", GLOBAL_MEMORY_STATUS->allocationTotalAmount, GLOBAL_MEMORY_STATUS->allocationTotalSize);
+    sprintf(out + strnlen(out, UINT16_MAX), "CURRENT: %zu ptrs, [%zu] b", GLOBAL_MEMORY_TABLE_SIZE, size);
     return out;
 }
 

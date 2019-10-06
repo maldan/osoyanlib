@@ -2,6 +2,12 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <time.h>
+#include <asm/ioctls.h>
+#include <sys/ioctl.h>
+#include <libgen.h>
+#include <stdarg.h>
+#include <limits.h>
 #include "../io/file.h"
 #include "console.h"
 

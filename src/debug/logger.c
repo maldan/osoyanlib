@@ -1,9 +1,5 @@
 #include "../../include/debug/logger.h"
-#include <time.h>
-#include <asm/ioctls.h>
-#include <sys/ioctl.h>
-#include <libgen.h>
-#include <stdarg.h>
+
 
 /* Standard file descriptors.  */
 #define	STDIN_FILENO	0	/* Standard input.  */
@@ -77,10 +73,10 @@ void logger_log(const char *fileName, size_t line, const char *format, ...) {
 
         if (i > 0) printf("%s│  %s", leftPad, stringCopy);
         else printf("│  %s", stringCopy);
-        used += strlen(stringCopy) + 3;
+        used += strnlen(stringCopy, USHRT_MAX) + 3;
 
         if (i == 0) {
-            int32_t spaces = w.ws_col - strlen(fileName) - 4 - used;
+            int32_t spaces = w.ws_col - strnlen(fileName, 16384) - 4 - used;
             // printf("[%zu]", spaces);
             if (spaces > 0) {
                 char gas[spaces + 1];
