@@ -40,6 +40,7 @@
 #include "include/list/vector.h"
 #include "include/list/dict.h"
 #include "include/list/map.h"
+#include "include/list/bitset.h"
 #include "include/util/args.h"
 #include "include/util/color.h"
 #include "include/util/number.h"
@@ -47,6 +48,7 @@
 #include "include/net/http.h"
 #include "include/net/websocket.h"
 #include "include/ui/termui.h"
+#include "include/compress/huffman.h"
 
 
 

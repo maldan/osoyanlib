@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include "../io/file.h"
+#include "../io/path.h"
 #include "console.h"
 
 /* Standard file descriptors.  */

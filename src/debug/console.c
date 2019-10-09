@@ -3,6 +3,10 @@
 #ifndef __MINGW32__
 struct termios saved_attributes;
 
+int console_enable_vt_mode() {
+    return 0;
+}
+
 struct winsize console_get_window_size() {
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
@@ -46,6 +50,21 @@ void console_fill_screen(char chr) {
     }
 }
 #else
+int console_enable_vt_mode() {
+    // Set output mode to handle virtual terminal sequences
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (hOut == INVALID_HANDLE_VALUE)
+        return 0;
+
+    DWORD dwMode = 0;
+    if (!GetConsoleMode(hOut, &dwMode))
+        return 0;
+
+    dwMode |= 0x0004;
+    if (!SetConsoleMode(hOut, dwMode))
+        return 0;
+    return 1;
+}
 struct winsize console_get_window_size() {
     int columns, rows;
     CONSOLE_SCREEN_BUFFER_INFO csbi;

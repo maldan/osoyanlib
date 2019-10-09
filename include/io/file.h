@@ -17,6 +17,7 @@
 #include "../string/string.h"
 #include "../string/chars.h"
 #include "../list/blob.h"
+#include "../list/bitset.h"
 #include "../list/vector.h"
 #include "../debug/logger.h"
 
@@ -57,6 +58,8 @@ size_t file_get_size(const char *path);
 bool file_put_contents(const char *path, void *buffer, size_t length);
 
 bool file_put_blob(const char *path, struct Blob *blob);
+
+bool file_put_bitset(const char *path, struct BitSet *bitSet);
 
 /**
  * Recursively search files with regex $filter$ at specified $path$.

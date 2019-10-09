@@ -1,5 +1,4 @@
 #include "../../include/util/os.h"
-#include "../../include/string/string.h"
 
 #ifdef __MINGW32__
 char *os_home_dir(char *addPath) {

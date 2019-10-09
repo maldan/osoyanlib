@@ -123,6 +123,10 @@ bool file_put_blob(const char *path, struct Blob *blob) {
     return file_put_contents(path, blob->list, blob->length);
 }
 
+bool file_put_bitset(const char *path, struct BitSet *bitSet) {
+    return file_put_contents(path, bitSet->list, bitSet->length / 8);
+}
+
 #ifdef __MINGW32__
 void ____file_real_search(struct Vector *fileInfoList, const char *path, regex_t *filter, size_t flags) {
     puts("Not working in windows");

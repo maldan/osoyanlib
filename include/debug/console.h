@@ -39,6 +39,7 @@ struct winsize {
 extern int isatty (int __fd) __THROW;
 #endif
 
+int console_enable_vt_mode();
 struct winsize console_get_window_size();
 void console_non_canonical_mode();
 void console_fill_screen(char);

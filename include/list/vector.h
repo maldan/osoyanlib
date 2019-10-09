@@ -48,6 +48,8 @@ void vector_push(struct Vector *vector, void *value);
  */
 void *vector_get(struct Vector *vector, ssize_t position);
 
+void vector_insert_at(struct Vector *vector, ssize_t at, void *value);
+
 void vector_remove_at(struct Vector *vector, ssize_t at, size_t amount);
 
 void vector_clear(struct Vector *vector);

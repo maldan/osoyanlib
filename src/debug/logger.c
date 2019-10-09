@@ -11,8 +11,25 @@
 #include <libgen.h>
 #include <stdarg.h>
 
+#ifdef __MINGW32__
+void logger_log(const char *fileName, size_t line, const char *format, ...) {
+    NEW_STRING(string);
 
+    va_list argPtr;
+    va_start(argPtr, format);
+    // Measure string length
+    size_t length = vsnprintf(NULL, 0, format, argPtr);
+    char *str = MEMORY_ALLOCATE(length + 1);
 
+    vsprintf(str, format, argPtr);
+    string_put(string, str);
+
+    printf("%s\n", string->list);
+
+    MEMORY_FREE(str);
+    va_end(argPtr);
+}
+#else
 void logger_log(const char *fileName, size_t line, const char *format, ...) {
     // Get terminal size
     struct winsize w = console_get_window_size();
@@ -27,7 +44,13 @@ void logger_log(const char *fileName, size_t line, const char *format, ...) {
     timeinfo = localtime(&rawtime);
 
     // Get file name
-    fileName = basename((char *)fileName);
+    //puts("1");
+    //puts(fileName);
+    fileName = path_file_basename((char *)fileName);
+    // puts(fileName);
+    // fileName = basename((char *)fileName);
+
+    //puts("2");
 
     // Create string for output
     NEW_STRING(string);
@@ -111,6 +134,7 @@ void logger_log(const char *fileName, size_t line, const char *format, ...) {
     }
 
     MEMORY_FREE(s);
+    MEMORY_FREE((void *)fileName);
 
     // wchar_t wchar = "─";
     // wmemset(s, wchar, w.ws_col - strlen(leftPad) - 1);
@@ -121,3 +145,4 @@ void logger_log(const char *fileName, size_t line, const char *format, ...) {
     DESTROY_STRING(string);
     // printf("[INFO] %2.d:%2.d:%2.d  %s                       %s:%zu\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, string->list, fileName, line);
 }
+#endif

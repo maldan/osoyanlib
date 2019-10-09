@@ -8,12 +8,19 @@
 #include "../list/dict.h"
 #include "../list/map.h"
 #include "../list/vector.h"
+#include "../list/bitset.h"
 #include "../util/number.h"
 #include "../string/chars.h"
 #include "../string/string.h"
 #include "../string/wstring.h"
 #include "../geom/rect.h"
 
+#ifdef __MINGW32__
+#define MINGW32_CT(val, type) ((((type)0) != (0 ? (val) : ((type)0))))
+#define PRINT(O) if MINGW32_CT(O, int) print_int(__FILE__, __LINE__, O, false);\
+else if MINGW32_CT(O, struct BitSet *) print_bitset(__FILE__, __LINE__, O, false);\
+else print_default(__FILE__, __LINE__, O, false);
+#else
 #define PRINT(O) _Generic((O), \
 char*: print_chars, \
 int: print_int, \
@@ -29,6 +36,9 @@ struct Blob*: print_blob, \
 struct Dict*: print_dict, \
 struct Rectangle*: print_rect, \
 default: print_default)(__FILE__, __LINE__, O, false);
+#endif
+
+
 
 #define PRINT_TO_BUFFER(O) _Generic((O), \
 struct FileInfo*: print_file_info, \
@@ -63,6 +73,8 @@ struct String *print_file_info(const char *fileName, size_t line, struct FileInf
  * @return Returns %struct String *% if $writeToBuffer$ is !true!
  */
 struct String * print_blob(char *fileName, size_t line, struct Blob *blob, bool writeToBuffer);
+
+struct String * print_bitset(char *fileName, size_t line, struct BitSet *bitSet, bool writeToBuffer);
 
 struct String *print_dict(char *fileName, size_t line, struct Dict *dict, bool writeToBuffer);
 

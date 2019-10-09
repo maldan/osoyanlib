@@ -41,6 +41,42 @@ struct String * print_blob(char *fileName, size_t line, struct Blob *blob, bool 
     return 0;
 }
 
+struct String * print_bitset(char *fileName, size_t line, struct BitSet *bitSet, bool writeToBuffer) {
+    NEW_STRING(X);
+    size_t counter = 0;
+    size_t bitId = 0;
+    size_t j = 0;
+    // size_t bitLength = 0;
+    for (size_t i = 0; i < bitSet->length; ++i) {
+        string_add(X,"%d", (bitSet->list[bitId] & (1u << j)) != 0 ?1 :0);
+        j++;
+        if (j > 7) {
+            j = 0;
+            bitId++;
+            string_put(X, " ");
+        }
+
+        if (counter++ >= 8 * 6 - 1) {
+            counter = 0;
+            string_add(X, "\n");
+        }
+
+        /*for (size_t j = 0; j < 8; ++j) {
+            string_add(X,"%d", (bitSet->list[i] & (1u << j)) != 0 ?1 :0);
+        }
+        string_put(X, " ");
+
+        if (counter++ > 12) {
+            counter = 0;
+            string_add(X, "\n");
+        }*/
+    }
+    string_add(X, "\n");
+    LOGGER_LOG(fileName, line, X->list);
+    DESTROY_STRING(X);
+    return 0;
+}
+
 struct String *print_dict(char *fileName, size_t line, struct Dict *dict, bool writeToBuffer) {
     NEW_STRING(X);
 

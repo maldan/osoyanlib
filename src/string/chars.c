@@ -2,7 +2,7 @@
 
 
 int chars_to_int(const char *str) {
-    return (int)chars_to_long(str);
+    return (int) chars_to_long(str);
 }
 
 long chars_to_long(const char *str) {
@@ -43,7 +43,7 @@ long chars_index_of(const char *where, const char *index) {
     for (size_t i = 0; i < len; ++i) {
         if (where[i] == index[indexId++]) {
             if (indexId == indexLen) {
-                return (long)(i + 1) - (long)indexLen;
+                return (long) (i + 1) - (long) indexLen;
             }
         } else {
             indexId = 0;
@@ -54,7 +54,7 @@ long chars_index_of(const char *where, const char *index) {
 }
 
 // Split string into chars array
-struct StringArray * chars_split(char *string, const char *delimiter, size_t maxAmount) {
+struct StringArray *chars_split(char *string, const char *delimiter, size_t maxAmount) {
     NEW_STRING_ARRAY(out);
 
     size_t strLen = strlen(string);
@@ -75,7 +75,8 @@ struct StringArray * chars_split(char *string, const char *delimiter, size_t max
             // Full match
             if (delimiterId == delimiterLen) {
                 char *temp = MEMORY_ALLOCATE(tempLength - delimiterLen + 1);
-                MEMORY_COPY(temp, string + stringLastPosition, tempLength - delimiterLen, temp, tempLength - delimiterLen);
+                MEMORY_COPY(temp, string + stringLastPosition, tempLength - delimiterLen, temp,
+                            tempLength - delimiterLen);
                 string_array_push(out, temp);
                 MEMORY_FREE(temp);
 
@@ -110,8 +111,9 @@ size_t chars_word_length(const char *word) {
 
     while (true) {
         if (word[pos] == ' '
-        || word[pos] == '\0' || word[pos] == '\n'
-        || word[pos] == '\r') break;
+            || word[pos] == '\0' || word[pos] == '\n'
+            || word[pos] == '\r')
+            break;
         pos++;
         amount++;
     }
@@ -121,7 +123,7 @@ size_t chars_word_length(const char *word) {
 size_t chars_utf8_length(const char *str) {
     size_t count = 0;
     while (*str)
-        count += ((uint8_t)(*str++) & 0xC0u) != 0x80;
+        count += ((uint8_t) (*str++) & 0xC0u) != 0x80;
     return count;
 }
 
@@ -172,7 +174,10 @@ char *chars_replace(char *src, char *pattern, char *replace) {
 }
 
 bool chars_match(char *src, char *pattern, size_t flags) {
-
+#ifdef __MINGW32__
+    puts("Not working in windows!");
+    exit(1);
+#else
     // Compile regex
     regex_t filterRegex;
     int reti = regcomp(&filterRegex, pattern, REG_EXTENDED | flags);
@@ -184,6 +189,7 @@ bool chars_match(char *src, char *pattern, size_t flags) {
 
     if (reti2) return false;
     return true;
+#endif
 }
 
 size_t chars_char_amount(char *src, char chr) {

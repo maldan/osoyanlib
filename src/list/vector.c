@@ -21,6 +21,17 @@ void *vector_get(struct Vector *vector, ssize_t position) {
     return vector->list[position];
 }
 
+void vector_insert_at(struct Vector *vector, ssize_t at, void *value) {
+    RESIZE_ARRAY_IF_NEED(vector, 1, void *);
+
+    size_t len = vector->length - at;
+    vector->length++;
+    for (size_t i = 0; i <= len; ++i)
+        vector->list[vector->length - i] = vector->list[vector->length - i - 1];
+
+    vector->list[at] = value;
+}
+
 void vector_remove_at(struct Vector *vector, ssize_t at, size_t amount) {
     ARRAY_REMOVE_AT(vector, size_t);
 }
