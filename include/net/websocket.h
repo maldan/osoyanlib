@@ -9,10 +9,12 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "../../include/string/string.h"
 #include "../../include/crypt/sha1.h"
 #include "../../include/string/base64.h"
+#include "../../include/list/blob.h"
 
 #define WEBSOCKET_SWITCHING_PROTOCOL "HTTP/1.1 101 Switching Protocols\r\n" \
 "Upgrade: websocket\r\n" \

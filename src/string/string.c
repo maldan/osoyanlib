@@ -28,7 +28,7 @@ void string_put_char(struct String *string, const char str) {
 
 // Just concatenate string with chars
 void string_put(struct String *string, const char *str) {
-    size_t len = strlen(str);
+    size_t len = strnlen(str, UINT32_MAX);
     RESIZE_ARRAY_IF_NEED(string, len + 1, char)
     MEMORY_COPY(string->list + string->length, str, len, string->list, string->allocated);
     string->length += len;
@@ -44,6 +44,7 @@ void string_add(struct String *string, char *format, ...) {
     // Measure string length
     size_t length = vsnprintf(NULL, 0, format, argPtr);
     str = MEMORY_ALLOCATE(length + 1);
+    va_end(argPtr);
 
     // Add formatted string
     va_start(argPtr, format);

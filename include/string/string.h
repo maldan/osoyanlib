@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdarg.h>
+#include <limits.h>
 #include "../list/list.h"
 #include "../memory/memory.h"
 

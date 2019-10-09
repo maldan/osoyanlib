@@ -22,7 +22,7 @@ wchar_t *wchars_substr(const wchar_t *where, ssize_t startIndex, ssize_t toIndex
 }
 
 char *wchars_to_chars(const wchar_t *where) {
-    size_t len = wcslen(where);
+    size_t len = wcsnlen(where, UINT32_MAX);
     char *out = MEMORY_ALLOCATE(len + 1);
     for (size_t i = 0; i < len; ++i) out[i] = where[i];
     return out;

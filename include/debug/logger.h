@@ -1,7 +1,22 @@
 #pragma once
 
+#include <time.h>
+
+#ifdef __MINGW32__
+#include <windows.h>
+#else
+#include <asm/ioctls.h>
+#include <sys/ioctl.h>
+#endif
+
+#include <libgen.h>
+#include <stdarg.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <time.h>
+#include <libgen.h>
+#include <stdarg.h>
+#include <limits.h>
 #include "../io/file.h"
 #include "../io/path.h"
 #include "console.h"

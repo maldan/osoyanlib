@@ -19,7 +19,7 @@ struct ArgList *args_init(int amount, char **args) {
             tempValue = MEMORY_ALLOCATE(0);
             dict_add(X->keys, currentKey + 2, tempValue);
         } else if (args[i][0] == '-') {
-            for (size_t j = 1; j < strlen(args[i]); ++j)
+            for (size_t j = 1; j < strnlen(args[i], UINT16_MAX); ++j)
                 string_put_char(X->flags, args[i][j]);
         } else {
             if (!currentKey) {
@@ -47,9 +47,9 @@ void args_free(struct ArgList *argList) {
 }
 
 bool args_has_flags(struct ArgList *argList, char *flags) {
-    uint8_t foundFlags = strlen(flags);
+    uint8_t foundFlags = strnlen(flags, UINT8_MAX);
 
-    for (size_t i = 0; i < strlen(flags); ++i) {
+    for (size_t i = 0; i < strnlen(flags, UINT8_MAX); ++i) {
         for (size_t j = 0; j < argList->flags->length; ++j) {
             if (flags[i] == argList->flags->list[j]) {
                 foundFlags--;

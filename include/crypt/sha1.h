@@ -3,6 +3,9 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdint.h>
+#include <limits.h>
+
+#include "../../include/memory/memory.h"
 #include "../list/blob.h"
 
 /**

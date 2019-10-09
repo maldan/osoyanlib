@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "../../include/list/list.h"
 #include "../../include/memory/memory.h"
+#include "../../include/string/chars.h"
 #include "../../include/string/string.h"
 
 #define NEW_DICT(X) struct Dict *X = MEMORY_ALLOCATE_STRUCT(Dict); ____dict_init(X);
