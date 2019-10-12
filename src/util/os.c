@@ -25,3 +25,11 @@ char *os_home_dir(char *addPath) {
     return finalPath;
 }
 #endif
+
+void os_sleep(int ms) {
+#ifdef __MINGW32__
+    Sleep(ms);
+#else
+    usleep(ms);
+#endif
+}

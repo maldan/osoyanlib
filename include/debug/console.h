@@ -15,8 +15,16 @@
 #define ANSI_BACKGROUND_GREEN     "\x1b[42m"
 #define ANSI_BACKGROUND_YELLOW     "\x1b[43m"
 #define ANSI_BACKGROUND_BLUE     "\x1b[44m"
-
 #define ANSI_BOLD "\x1b[1m"
+
+#define CONSOLE_KEY_UP 10000
+#define CONSOLE_KEY_DOWN 10001
+#define CONSOLE_KEY_LEFT 10002
+#define CONSOLE_KEY_RIGHT 10003
+#define CONSOLE_KEY_ENTER 10005
+#define CONSOLE_KEY_DEL 10006
+#define CONSOLE_KEY_CTRL_C 10007
+#define CONSOLE_KEY_CTRL_V 10008
 
 #define	STDIN_FILENO	0
 #define	STDOUT_FILENO	1
@@ -25,6 +33,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
+#include <conio.h>
 
 #ifdef __MINGW32__
 #include <windows.h>
@@ -43,3 +53,4 @@ int console_enable_vt_mode();
 struct winsize console_get_window_size();
 void console_non_canonical_mode();
 void console_fill_screen(char);
+int console_get_key();

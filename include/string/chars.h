@@ -39,6 +39,8 @@ int chars_to_int(const char *source);
  */
 long chars_to_long(const char *source);
 
+float chars_to_float(const char *source);
+
 /**
  * Get index of $pattern$
  * @param where - Source chars array

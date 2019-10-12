@@ -30,15 +30,13 @@ char * ____memory_print_state(bool writeInBuffer) {
     return 0;
 }
 
-char * ____memory_get_state() {
-    char *out = calloc(1, 2048);
-    size_t size = 0;
-    for (size_t i = 0; i < GLOBAL_MEMORY_TABLE_SIZE; ++i) {
-        size += GLOBAL_MEMORY_TABLE[i]->size;
-    }
-    sprintf(out + strnlen(out, UINT16_MAX), "TOTAL: %zu ptrs, [%zu] b ", GLOBAL_MEMORY_STATUS->allocationTotalAmount, GLOBAL_MEMORY_STATUS->allocationTotalSize);
-    sprintf(out + strnlen(out, UINT16_MAX), "CURRENT: %zu ptrs, [%zu] b", GLOBAL_MEMORY_TABLE_SIZE, size);
-    return out;
+struct MemoryStatus memory_get_status() {
+    struct MemoryStatus state;
+    state.allocationTotalSize = GLOBAL_MEMORY_STATUS->allocationTotalSize;
+    state.allocationTotalAmount = GLOBAL_MEMORY_STATUS->allocationTotalAmount;
+    state.allocationCurrentAmount = GLOBAL_MEMORY_STATUS->allocationCurrentAmount;
+    state.allocationCurrentSize = GLOBAL_MEMORY_STATUS->allocationCurrentSize;
+    return state;
 }
 
 // Allocate amount and return pointer
@@ -57,6 +55,8 @@ void *____memory_allocate(char *fileName, size_t line, size_t size) {
 
     GLOBAL_MEMORY_STATUS->allocationTotalAmount++;
     GLOBAL_MEMORY_STATUS->allocationTotalSize += size;
+    GLOBAL_MEMORY_STATUS->allocationCurrentAmount++;
+    GLOBAL_MEMORY_STATUS->allocationCurrentSize += size;
 
     // Increase table size
     GLOBAL_MEMORY_TABLE_SIZE++;
@@ -81,6 +81,8 @@ void *____memory_reallocate(char *fileName, size_t line, void *pointer, size_t s
     // Change reallocated size
     GLOBAL_MEMORY_STATUS->allocationTotalSize -= block->size;
     GLOBAL_MEMORY_STATUS->allocationTotalSize += size;
+    GLOBAL_MEMORY_STATUS->allocationCurrentSize -= block->size;
+    GLOBAL_MEMORY_STATUS->allocationCurrentSize += size;
 
     void *ptr = realloc(pointer, size);
     block->pointer = ptr;
@@ -101,6 +103,13 @@ void ____memory_copy(char *fileName, size_t line, void *__restrict dst, const vo
 void ____memory_free(char *fileName, size_t line, char *pointerName, void *pointer) {
     for (size_t i = 0; i < GLOBAL_MEMORY_TABLE_SIZE; ++i) {
         if (GLOBAL_MEMORY_TABLE[i]->pointer == pointer) {
+            // Decrease status
+            GLOBAL_MEMORY_STATUS->allocationCurrentAmount--;
+            GLOBAL_MEMORY_STATUS->allocationCurrentSize -= GLOBAL_MEMORY_TABLE[i]->size;
+            // Real free memory
+            free(GLOBAL_MEMORY_TABLE[i]->pointer);
+            free(GLOBAL_MEMORY_TABLE[i]);
+            // Remove from table
             size_t len = GLOBAL_MEMORY_TABLE_SIZE - (i + 1);
             memmove(GLOBAL_MEMORY_TABLE + i, GLOBAL_MEMORY_TABLE + i + 1, len * sizeof(size_t));
             GLOBAL_MEMORY_TABLE_SIZE--;

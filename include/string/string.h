@@ -105,6 +105,8 @@ void string_clear(struct String *string);
  */
 void string_array_push(struct StringArray *array, char *string);
 
+void string_array_add(struct StringArray *array, char *format, ...);
+
 /**
  * Join strings in $array$ into %struct String% with $glue$.
  * For example if array contain strings ["1", "2", "3"] and glue is "-" then we will get %struct String% that contains "1-2-3" result.

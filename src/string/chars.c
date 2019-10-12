@@ -28,6 +28,10 @@ long chars_to_long(const char *str) {
     return atol(num);
 }
 
+float chars_to_float(const char *source) {
+    return atof(source);
+}
+
 char *chars_substr(const char *where, ssize_t startIndex, ssize_t toIndex) {
     size_t len = toIndex - startIndex;
     char *sas = MEMORY_ALLOCATE(len + 1);

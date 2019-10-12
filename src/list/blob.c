@@ -28,17 +28,37 @@ void blob_put(struct Blob *blob, uint64_t value, size_t size, ssize_t position) 
     }
 }
 
-void blob_put8(struct Blob *blob, int8_t value, ssize_t position) {
-    blob_put(blob, value, 1, position);
+float blob_get_float(struct Blob *blob) {
+    if (blob->position + 4 > blob->length) return 0;
+
+    float s;
+    memcpy(&s, blob->list + blob->position, 4);
+    blob->position += 4;
+    return s;
 }
-void blob_put16(struct Blob *blob, int16_t value, ssize_t position) {
-    blob_put(blob, value, 2, position);
+
+void blob_put_float(struct Blob *blob, float value) {
+    uint32_t s;
+    memcpy(&s, &value, 4);
+    blob_put(blob, s, 4, -1);
 }
-void blob_put32(struct Blob *blob, int32_t value, ssize_t position) {
-    blob_put(blob, value, 4, position);
+
+void blob_put8(struct Blob *blob, int8_t value) {
+    blob_put(blob, value, 1, -1);
 }
-void blob_put64(struct Blob *blob, int64_t value, ssize_t position) {
-    blob_put(blob, value, 8, position);
+int8_t blob_get8(struct Blob *blob) {
+    if (blob->position + 1 > blob->length) return 0;
+    return blob->list[blob->position++];
+}
+
+void blob_put16(struct Blob *blob, int16_t value) {
+    blob_put(blob, value, 2, -1);
+}
+void blob_put32(struct Blob *blob, int32_t value) {
+    blob_put(blob, value, 4, -1);
+}
+void blob_put64(struct Blob *blob, int64_t value) {
+    blob_put(blob, value, 8, -1);
 }
 
 /*void blob_put_auto(struct Blob *blob, uint64_t value, size_t position) {
@@ -48,17 +68,17 @@ void blob_put64(struct Blob *blob, int64_t value, ssize_t position) {
     else blob_put64(blob, value, position);
 }*/
 
-void blob_put_chars(struct Blob *blob, char *chars, ssize_t position) {
+void blob_put_chars(struct Blob *blob, char *chars) {
     // @TODO position is ignore
     for (size_t i = 0; i < strnlen(chars, UINT32_MAX); ++i) {
-        blob_put8(blob, chars[i], position);
+        blob_put8(blob, chars[i]);
     }
 }
 
-void blob_put_bytes(struct Blob *blob, uint8_t *bytes, size_t size, ssize_t position) {
+void blob_put_bytes(struct Blob *blob, uint8_t *bytes, size_t size) {
     // @TODO position is ignore
     for (size_t i = 0; i < size; ++i) {
-        blob_put8(blob, bytes[i], position);
+        blob_put8(blob, bytes[i]);
     }
 }
 

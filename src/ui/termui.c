@@ -111,10 +111,10 @@ void ____termui_calc_layout(struct TermUiDocument *document, struct TermUiNode *
     int16_t blockHeight[node->nodes->length];
     int16_t blockOffsetX[node->nodes->length + 1];
     int16_t blockOffsetY[node->nodes->length + 1];
-    bzero(blockWidth, node->nodes->length);
-    bzero(blockHeight, node->nodes->length);
-    bzero(blockOffsetX, node->nodes->length);
-    bzero(blockOffsetY, node->nodes->length);
+    memset(blockWidth, 0, node->nodes->length);
+    memset(blockHeight, 0, node->nodes->length);
+    memset(blockOffsetX, 0, node->nodes->length);
+    memset(blockOffsetY, 0, node->nodes->length);
 
     // Calculate child block
     for (size_t k = 0; k < node->nodes->length; ++k) {

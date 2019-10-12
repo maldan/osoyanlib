@@ -153,7 +153,7 @@ struct Blob * huffman_uncompress(struct HuffmanResult result) {
         // Node contain result
         if (!tempNode->isNull) {
             // Put result and reset tree
-            blob_put8(X, (uint8_t)tempNode->value, -1);
+            blob_put8(X, (uint8_t)tempNode->value);
             tempNode = result.tree;
         }
     }

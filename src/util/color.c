@@ -25,3 +25,14 @@ char *color_rgb_to_hex(struct ColorRgbInt color) {
     MEMORY_FREE(X);
     return str;
 }
+
+struct String *color_hex_to_terminal(char *hexColor) {
+    NEW_STRING(out)
+
+    if (hexColor[0] == '#') {
+        struct ColorRgbInt x = color_hex_to_rgb(hexColor + 1);
+        string_add(out, "\x1b[38;2;%d;%d;%dm", x.r, x.g, x.b);
+    }
+
+    return out;
+}

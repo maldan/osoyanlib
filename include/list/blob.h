@@ -47,46 +47,46 @@ void blob_allocate(struct Blob *blob, size_t amount);
  */
 void blob_put(struct Blob *blob, uint64_t value, size_t size, ssize_t position);
 
+float blob_get_float(struct Blob *blob);
+
+void blob_put_float(struct Blob *blob, float value);
+
 /**
  * Function works same as ~blob_put~ but the $size$ is 1 byte.
  * @param blob - Current byte array
  * @param value - Number to add, max size is 1 byte
- * @param position - Position in byte array
  */
-void blob_put8(struct Blob *blob, int8_t value, ssize_t position);
+void blob_put8(struct Blob *blob, int8_t value);
+int8_t blob_get8(struct Blob *blob);
 
 /**
  * Function works same as ~blob_put~ but the $size$ is 2 byte.
  * @param blob - Current byte array
  * @param value - Number to add, max size is 2 byte
- * @param position - Position in byte array
  */
-void blob_put16(struct Blob *blob, int16_t value, ssize_t position);
+void blob_put16(struct Blob *blob, int16_t value);
 
 /**
  * Function works same as ~blob_put~ but the $size$ is 4 byte.
  * @param blob - Current byte array
  * @param value - Number to add, max size is 4 byte
- * @param position - Position in byte array
  */
-void blob_put32(struct Blob *blob, int32_t value, ssize_t position);
+void blob_put32(struct Blob *blob, int32_t value);
 
 /**
  * Function works same as ~blob_put~ but the $size$ is 8 byte.
  * @param blob - Current byte array
  * @param value - Number to add, max size is 8 byte
- * @param position - Position in byte array
  */
-void blob_put64(struct Blob *blob, int64_t value, ssize_t position);
+void blob_put64(struct Blob *blob, int64_t value);
 
 /**
  * Add $chars$ to $blob$ array at specified $position$. Add $chars$ to the end of array if $position$ is -1
  * @param blob - Current byte array
  * @param chars - Chars you want to add
- * @param position - Position in byte array
  */
-void blob_put_chars(struct Blob *blob, char *chars, ssize_t position);
+void blob_put_chars(struct Blob *blob, char *chars);
 
-void blob_put_bytes(struct Blob *blob, uint8_t *bytes, size_t size, ssize_t position);
+void blob_put_bytes(struct Blob *blob, uint8_t *bytes, size_t size);
 
 void blob_concat(struct Blob *blob, struct Blob *src);

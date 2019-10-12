@@ -192,14 +192,14 @@ struct Blob * sha1(void *str, size_t len) {
     }
     __sha1_update(context, finalcount, 8); /* Should cause a SHA1Transform() */
     for (i = 0; i < 20; i++) {
-        blob_put8(hashOut, (unsigned char)((context->state[i >> 2] >> ((3 - (i & 3)) * 8)) & 255), -1);
+        blob_put8(hashOut, (unsigned char)((context->state[i >> 2] >> ((3 - (i & 3)) * 8)) & 255));
         //hashOut[i] = (unsigned char)((context->state[i >> 2] >> ((3 - (i & 3)) * 8)) & 255);
     }
 
     /* Wipe variables */
     memset(context, '\0', sizeof(*context));
     memset(&finalcount, '\0', sizeof(finalcount));
-    blob_put8(hashOut, 0, -1);
+    blob_put8(hashOut, 0);
     // hashOut[20] = '\0';
 
     return hashOut;

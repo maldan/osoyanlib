@@ -85,4 +85,21 @@ void console_non_canonical_mode() {
 void console_fill_screen(char chr) {
 
 }
+int console_get_key() {
+    int c = getch();
+    if (c == 224) {
+        switch (getch()) {
+            case 72: return CONSOLE_KEY_UP;
+            case 80: return CONSOLE_KEY_DOWN;
+            case 75: return CONSOLE_KEY_LEFT;
+            case 77: return CONSOLE_KEY_RIGHT;
+            default:
+                return CONSOLE_KEY_DEL;
+        }
+    }
+    if (c == 13) return CONSOLE_KEY_ENTER;
+    if (c == 3) return CONSOLE_KEY_CTRL_C;
+    if (c == 22) return CONSOLE_KEY_CTRL_V;
+    return c;
+}
 #endif

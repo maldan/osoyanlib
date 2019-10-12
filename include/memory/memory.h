@@ -11,6 +11,8 @@
 struct MemoryStatus {
     size_t allocationTotalAmount;
     size_t allocationTotalSize;
+    size_t allocationCurrentAmount;
+    size_t allocationCurrentSize;
 };
 
 struct MemoryBlock {
@@ -62,7 +64,7 @@ void ____memory_init();
  */
 char * ____memory_print_state(bool writeInBuffer);
 
-char * ____memory_get_state();
+struct MemoryStatus memory_get_status();
 
 /**
  * Function similar to ~calloc~. It's just add information of allocation to the global table.

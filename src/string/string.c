@@ -119,6 +119,25 @@ void string_array_push(struct StringArray *array, char *string) {
     array->length++;
 }
 
+void string_array_add(struct StringArray *array, char *format, ...) {
+    char *str;
+    va_list argPtr;
+    va_start(argPtr, format);
+
+    // Measure string length
+    size_t length = vsnprintf(NULL, 0, format, argPtr);
+    str = MEMORY_ALLOCATE(length + 1);
+    va_end(argPtr);
+
+    // Add formatted string
+    va_start(argPtr, format);
+    vsprintf(str, format, argPtr);
+    string_array_push(array, str);
+    // string_put(string, str);
+    MEMORY_FREE(str);
+    va_end(argPtr);
+}
+
 void string_array_clear(struct StringArray *array) {
     for (size_t i = 0; i < array->length; ++i)
         ____string_free(array->list[i]);
