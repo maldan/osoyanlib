@@ -88,5 +88,6 @@ void blob_put64(struct Blob *blob, int64_t value);
 void blob_put_chars(struct Blob *blob, char *chars);
 
 void blob_put_bytes(struct Blob *blob, uint8_t *bytes, size_t size);
+uint8_t *blob_get_bytes(struct Blob *blob, size_t size);
 
 void blob_concat(struct Blob *blob, struct Blob *src);

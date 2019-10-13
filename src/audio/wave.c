@@ -1,10 +1,11 @@
 #include "../../include/audio/wave.h"
 
 struct WaveSound *wave_allocate(float length) {
-    size_t sampleSize = (size_t)ceilf(176400.0f * length) + sizeof(struct WaveHeader) + 4;
     size_t sampleRate = 44100;
     size_t numChannels = 2;
     size_t bitsPerSample = 16;
+    size_t byteRate = sampleRate * numChannels * bitsPerSample / 8;
+    size_t sampleSize = (size_t)ceilf((float)byteRate * length) + sizeof(struct WaveHeader) + 4;
 
     // Allocate data
     char *buffer = MEMORY_ALLOCATE(sizeof(struct WaveHeader) + sampleSize);
@@ -19,7 +20,7 @@ struct WaveSound *wave_allocate(float length) {
     header->audioFormat = 1;
     header->numChannels = numChannels;
     header->sampleRate = sampleRate;
-    header->byteRate = sampleRate * numChannels * bitsPerSample / 8;
+    header->byteRate = byteRate;
     header->blockAlign = 4;
     header->bitsPerSample = bitsPerSample;
     header->subChunk2ID = 0x61746164;
@@ -30,7 +31,7 @@ struct WaveSound *wave_allocate(float length) {
     waveSound->header = (struct WaveHeader *)buffer;
     waveSound->data = buffer + sizeof(struct WaveHeader);
     waveSound->length = sampleSize;
-    waveSound->dataLength = sampleSize + sizeof(struct WaveHeader);
+    waveSound->dataLength = sampleSize - sizeof(struct WaveHeader);
 
     return waveSound;
 }

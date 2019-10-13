@@ -6,3 +6,5 @@ struct Rectangle {
     int width;
     int height;
 };
+
+struct Rectangle rect_add(struct Rectangle r1, struct Rectangle r2);

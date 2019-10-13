@@ -82,6 +82,15 @@ void blob_put_bytes(struct Blob *blob, uint8_t *bytes, size_t size) {
     }
 }
 
+uint8_t *blob_get_bytes(struct Blob *blob, size_t size) {
+    size_t realSize = size;
+    //if (blob->position + size > blob->length) realSize -= blob->length - blob->position + size;
+    uint8_t *out = MEMORY_ALLOCATE(realSize);
+    MEMORY_COPY(out, blob->list, realSize, out, realSize);
+    blob->position += realSize;
+    return out;
+}
+
 void blob_concat(struct Blob *dst, struct Blob *src) {
     // Resize blob
     if (dst->position + src->length > dst->allocated) {
